@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.MainController" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="closeButton" onAction="#openMazeWindow" layoutX="291.0" layoutY="183.0" mnemonicParsing="false"  prefHeight="55.0" prefWidth="109.0" text="Start Game" />
+      <Button layoutX="447.0" layoutY="183.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="109.0" text="Load Game" />
+      <Button layoutX="367.0" layoutY="257.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="109.0" text="Options" />
+      <Button fx:id="HelpButton" layoutX="367.0" layoutY="321.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="109.0" text="Help" />
+      <Button fx:id="AboutButton" onAction="#openAbout" layoutX="367.0" layoutY="383.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="109.0" text="About" />
+      <Button layoutX="367.0" layoutY="449.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="109.0" text="Exit" />
+      <Label layoutX="301.0" layoutY="52.0" prefHeight="66.0" prefWidth="250.0" text="Maze Game " textAlignment="CENTER">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
