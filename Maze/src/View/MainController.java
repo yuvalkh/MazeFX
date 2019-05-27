@@ -27,7 +27,7 @@ public class MainController{
     public MazeDisplayer mazeDisplayer;
     public javafx.scene.control.TextField textField_mazeRows;
     public javafx.scene.control.TextField textField_mazeColumns;
-    public javafx.scene.control.Button closeButton;
+    public javafx.scene.control.Button StartGame;
     public javafx.scene.control.Button HelpButton;
     public javafx.scene.control.Button AboutButton;
 
@@ -103,7 +103,7 @@ public class MainController{
         }
     }
 
-    public void openMazeWindow() throws IOException {
+    /*public void openMazeWindow() throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("MainWindow.fxml"));
@@ -112,7 +112,19 @@ public class MainController{
         stage.setTitle("TheMaze");
         stage.setScene(scene);
         stage.show();
-        Stage oldStage = (Stage) closeButton.getScene().getWindow();
+        Stage oldStage = (Stage) StartGame.getScene().getWindow();
+        oldStage.close();
+    }*/
+    public void openMazeWindow() throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("MainWindow.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(),950,400);
+        Stage stage = new Stage();
+        stage.setTitle("TheMaze");
+        stage.setScene(scene);
+        stage.show();
+        Stage oldStage = (Stage) StartGame.getScene().getWindow();
         oldStage.close();
     }
 
