@@ -9,7 +9,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -117,9 +116,7 @@ public class MainController{
         oldStage.close();
     }
 
-    private int[] getDimensionsFromDialog
-
-    public void generateMaze(){
+    private int[] getDimensionsFromDialog(){
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Set Maze Dimension");
 
@@ -163,6 +160,12 @@ public class MainController{
                 RowsAndCols[1] = -1;
             }
         });
+        return new int[]{RowsAndCols[0],RowsAndCols[1]};
+    }
+
+    public void generateMaze(){
+        int[] RowsAndCols = new int[2];
+        RowsAndCols = getDimensionsFromDialog();
 
         if(RowsAndCols[0] > 0 && RowsAndCols[1] > 0) {
             IMazeGenerator mazeGenerator = new MyMazeGenerator();
