@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.beans.property.*;
 
 public class Main extends Application {
 
@@ -23,6 +24,7 @@ public class Main extends Application {
         pane.getChildren().add(root);
         pane.setStyle("-fx-border-color: black;");
 
+        
         //root.prefHeightProperty().bind(pane.heightProperty());
         //root.prefWidthProperty().bind(scene.widthProperty());
 
