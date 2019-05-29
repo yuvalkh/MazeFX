@@ -10,7 +10,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -24,7 +28,7 @@ import java.util.Optional;
 public class MainController{
 
     @FXML
-    public MazeDisplayer mazeDisplayer;
+    public MazeDisplayer mazeDisplayer;//the canvas
     public javafx.scene.control.TextField textField_mazeRows;
     public javafx.scene.control.TextField textField_mazeColumns;
     public javafx.scene.control.Button StartGame;
@@ -191,8 +195,27 @@ public class MainController{
             solveMaze = new SearchableMaze(GeneratedMaze);
             PlayerSpot = new Position(GeneratedMaze.getStartPosition().getRowIndex(), GeneratedMaze.getStartPosition().getColumnIndex());
             maze[PlayerSpot.getRowIndex()][PlayerSpot.getColumnIndex()] = 5;
+
+            GraphicsContext graphicsContext = mazeDisplayer.getGraphicsContext2D();
+            Image theMaze[][] = new Image[maze.length][maze[0].length];
+            for (int i = 0; i < maze.length; i++) {
+                for (int j = 0; j < maze[0].length; j++) {
+                    if(maze[i][j] == 1){
+                        theMaze[i][j] = new Image("BlueWall.jpg");
+                    }
+                    if(maze[i][j] == 0){
+                        theMaze[i][j] = null;
+                    }
+                    if(theMaze[i][j] != null) {
+                        graphicsContext.drawImage(theMaze[i][j], i * 10, j * 10);
+                    }
+                }
+            }
+
+
+
             mazeDisplayer.setDimentions(maze);
-            mazeDisplayer.redraw();
+            //mazeDisplayer.redraw();
         }
     }
 
