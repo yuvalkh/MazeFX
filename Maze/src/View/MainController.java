@@ -92,6 +92,7 @@ public class MainController{
             }
             else{
                 //showAlert("You can't walk up anymore","no way");
+
             }
         }
         if (ke.getCode() == KeyCode.LEFT) {
