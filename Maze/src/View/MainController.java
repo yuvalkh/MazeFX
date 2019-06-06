@@ -196,26 +196,8 @@ public class MainController{
             PlayerSpot = new Position(GeneratedMaze.getStartPosition().getRowIndex(), GeneratedMaze.getStartPosition().getColumnIndex());
             maze[PlayerSpot.getRowIndex()][PlayerSpot.getColumnIndex()] = 5;
 
-            GraphicsContext graphicsContext = mazeDisplayer.getGraphicsContext2D();
-            Image theMaze[][] = new Image[maze.length][maze[0].length];
-            for (int i = 0; i < maze.length; i++) {
-                for (int j = 0; j < maze[0].length; j++) {
-                    if(maze[i][j] == 1){
-                        theMaze[i][j] = new Image("BlueWall.jpg");
-                    }
-                    if(maze[i][j] == 0){
-                        theMaze[i][j] = null;
-                    }
-                    if(theMaze[i][j] != null) {
-                        graphicsContext.drawImage(theMaze[i][j], i * 10, j * 10);
-                    }
-                }
-            }
-
-
-
             mazeDisplayer.setDimentions(maze);
-            //mazeDisplayer.redraw();
+            mazeDisplayer.redraw();
         }
     }
 

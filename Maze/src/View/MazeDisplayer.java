@@ -14,6 +14,8 @@ import javafx.scene.paint.Color;
 import algorithms.mazeGenerators.*;
 
 import javax.imageio.ImageIO;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
@@ -50,40 +52,46 @@ public class MazeDisplayer extends Canvas {
     }
 
     public void redraw() {
-        if (maze != null){
-
-
-
-
-            /*
+        if (maze != null) {
             double canvasHeight = getHeight();
             double canvasWidth = getWidth();
-            double cellHeight = canvasHeight/maze.length;
-            double cellWidth = canvasWidth/maze[0].length;
+            double cellHeight = canvasHeight / maze.length;
+            double cellWidth = canvasWidth / maze[0].length;
+            double characterPositionColumn = 0;
+            double characterPositionRow = 0;
 
-            GraphicsContext graphicsContext2D = getGraphicsContext2D();
-            graphicsContext2D.clearRect(0,0,canvasWidth,canvasHeight); //Clean the Canvas
-            graphicsContext2D.setFill(Color.BLUE); //Set color to the context
+            try {
+                Image wallImage = new Image("BlueWall.jpg");
+                Image characterImage = new Image("Pacman.jpg");
 
-            //Draw maze
+                GraphicsContext gc = getGraphicsContext2D();
+                gc.clearRect(0, 0, getWidth(), getHeight());
+                gc.setFill(Color.BLACK);
 
-            for (int row = 0; row < maze.length; row++) {
-                for (int column = 0; column < maze[row].length; column++) {
-                    if (maze[row][column] == 1){
-                        graphicsContext2D.fillRect(column*cellHeight,row*cellWidth,cellWidth,cellHeight); //Draw Wall
-                    }
-                    if(maze[row][column] == 2){
-                        graphicsContext2D.setFill(Color.BROWN); //Set color to the context
-                        graphicsContext2D.fillRect(column*cellHeight,row*cellWidth,cellWidth,cellHeight); //Draw Solution
-                        graphicsContext2D.setFill(Color.BLUE); //Set color to the context
-                    }
-                    if(maze[row][column] == 5){
-                        graphicsContext2D.setFill(Color.YELLOW);
-                        graphicsContext2D.fillRect(column*cellHeight,row*cellWidth,cellWidth,cellHeight); //Draw Solution
-                        graphicsContext2D.setFill(Color.BLUE); //Set color to the context
+                //Draw Maze
+                for (int i = 0; i < maze.length; i++) {
+                    for (int j = 0; j < maze[i].length; j++) {
+                        if (maze[i][j] == 1) {
+                            gc.fillRect(j * cellHeight, i * cellWidth, cellHeight, cellWidth);
+                            gc.drawImage(wallImage, j * cellHeight, i * cellWidth, cellHeight, cellWidth);
+                        }
+                        if(maze[i][j] == 0){
+                            gc.fillRect(j * cellHeight, i * cellWidth, cellHeight, cellWidth);
+                        }
+                        if(maze[i][j] == 5){
+                            characterPositionColumn = j;
+                            characterPositionRow = i;
+                        }
                     }
                 }
-            }*/
+
+                //Draw Character
+                //gc.setFill(Color.RED);
+                //gc.fillOval(characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
+                gc.drawImage(characterImage, characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
+            } catch (Exception e) {
+                //e.printStackTrace();
+            }
         }
     }
 }
