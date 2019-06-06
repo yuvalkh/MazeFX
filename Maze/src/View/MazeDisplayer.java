@@ -26,6 +26,10 @@ public class MazeDisplayer extends Canvas {
 
     private StringProperty someProperty;
 
+    double characterPositionColumn;
+    double characterPositionRow;
+    int zoom = 10;
+
     public String getSomeProperty() {
         return someProperty.get();
     }
@@ -36,16 +40,40 @@ public class MazeDisplayer extends Canvas {
 
     private int[][] maze;
 
-    public void setDimentions(int[][] maze){
+    public void ZoomOut() {
+        this.zoom++;
+    }
+
+    public void ZoomIn() {
+        this.zoom--;
+    }
+
+    public void setDimentions(int[][] maze) {
         this.maze = maze;
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze[i].length; j++) {
+                if (maze[i][j] == 5) {
+                    characterPositionColumn = j;
+                    characterPositionRow = i;
+                }
+            }
+        }
         redraw();
     }
 
-    public void setDimentions(Maze newMaze){
+    public void setDimentions(Maze newMaze) {
         maze = new int[newMaze.getNumOfRows()][newMaze.getNumOfColumns()];
         for (int i = 0; i < newMaze.getNumOfRows(); i++) {
             for (int j = 0; j < newMaze.getNumOfColumns(); j++) {
-                maze[i][j] = newMaze.getMazeInfo(i,j);
+                maze[i][j] = newMaze.getMazeInfo(i, j);
+            }
+        }
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze[i].length; j++) {
+                if (maze[i][j] == 5) {
+                    characterPositionColumn = j;
+                    characterPositionRow = i;
+                }
             }
         }
         redraw();
@@ -55,10 +83,9 @@ public class MazeDisplayer extends Canvas {
         if (maze != null) {
             double canvasHeight = getHeight();
             double canvasWidth = getWidth();
-            double cellHeight = canvasHeight / maze.length;
-            double cellWidth = canvasWidth / maze[0].length;
-            double characterPositionColumn = 0;
-            double characterPositionRow = 0;
+            double cellHeight = canvasHeight / (2 * zoom + 1);
+            double cellWidth = canvasWidth / (2 * zoom + 1);
+
 
             try {
                 Image wallImage = new Image("BlueWall.jpg");
@@ -68,27 +95,33 @@ public class MazeDisplayer extends Canvas {
                 gc.clearRect(0, 0, getWidth(), getHeight());
                 gc.setFill(Color.BLACK);
 
+                double printx = 0;//i
+                double printy = 0;//j
                 //Draw Maze
-                for (int i = 0; i < maze.length; i++) {
-                    for (int j = 0; j < maze[i].length; j++) {
-                        if (maze[i][j] == 1) {
-                            gc.fillRect(j * cellHeight, i * cellWidth, cellHeight, cellWidth);
-                            gc.drawImage(wallImage, j * cellHeight, i * cellWidth, cellHeight, cellWidth);
+                for (int i = (int) characterPositionRow - zoom; i <= (int) characterPositionRow + zoom; i++) {
+                    for (int j = (int) characterPositionColumn - zoom; j <= (int) characterPositionColumn + zoom; j++) {
+                        if (i < 0 || j < 0 || i >= maze.length || j >= maze[i].length) {
+                            gc.fillRect(printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                        } else if (maze[i][j] == 1) {
+                            gc.fillRect(printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                            gc.drawImage(wallImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                        } else if (maze[i][j] == 0) {
+                            gc.fillRect(printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                        } else if (maze[i][j] == 5) {
+                            //characterPositionColumn = j;
+                            //characterPositionRow = i;
+                            gc.drawImage(characterImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                         }
-                        if(maze[i][j] == 0){
-                            gc.fillRect(j * cellHeight, i * cellWidth, cellHeight, cellWidth);
-                        }
-                        if(maze[i][j] == 5){
-                            characterPositionColumn = j;
-                            characterPositionRow = i;
-                        }
+                        printy++;
                     }
+                    printy = 0;
+                    printx++;
                 }
 
                 //Draw Character
                 //gc.setFill(Color.RED);
                 //gc.fillOval(characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
-                gc.drawImage(characterImage, characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
+                //gc.drawImage(characterImage, characterPositionColumn * cellHeight, characterPositionRow * cellWidth, cellHeight, cellWidth);
             } catch (Exception e) {
                 //e.printStackTrace();
             }

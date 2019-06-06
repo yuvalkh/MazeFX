@@ -62,7 +62,7 @@ public class MainController{
                 maze[PlayerSpot.getRowIndex()][PlayerSpot.getColumnIndex()] = 0;
                 PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() + 1);
                 maze[PlayerSpot.getRowIndex()][PlayerSpot.getColumnIndex()] = 5;
-                //mazeDisplayer.setDimentions(maze);
+                mazeDisplayer.setDimentions(maze);
                 mazeDisplayer.redraw();
             }
             else{
@@ -78,6 +78,7 @@ public class MainController{
                 mazeDisplayer.redraw();
             }
             else{
+
                 //showAlert("You can't walk down anymore","no way");
             }
         }
@@ -99,9 +100,11 @@ public class MainController{
                 PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() - 1);
                 maze[PlayerSpot.getRowIndex()][PlayerSpot.getColumnIndex()] = 5;
                 mazeDisplayer.setDimentions(maze);
+
                 mazeDisplayer.redraw();
             }
             else{
+
                 //showAlert("You can't walk left anymore","no way");
             }
         }
