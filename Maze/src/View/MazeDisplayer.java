@@ -1,30 +1,35 @@
 package View;
 
 import javafx.beans.property.StringProperty;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import algorithms.mazeGenerators.*;
+
+import javax.imageio.ImageIO;
+import javax.xml.ws.Endpoint;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * Created by Aviadjo on 3/9/2017.
  */
 public class MazeDisplayer extends Canvas {
 
-    private StringProperty someProperty;
-
     double characterPositionColumn;
     double characterPositionRow;
     int zoom = 10;
-
-    public String getSomeProperty() {
-        return someProperty.get();
-    }
-
-    public void setSomeProperty(String someProperty) {
-        this.someProperty.set(someProperty);
-    }
+    Position start;
+    Position end;
 
     private int[][] maze;
 
@@ -46,7 +51,6 @@ public class MazeDisplayer extends Canvas {
                 }
             }
         }
-        redraw();
     }
 
     public void setDimentions(Maze newMaze) {
@@ -56,18 +60,13 @@ public class MazeDisplayer extends Canvas {
                 maze[i][j] = newMaze.getMazeInfo(i, j);
             }
         }
-        for (int i = 0; i < maze.length; i++) {
-            for (int j = 0; j < maze[i].length; j++) {
-                if (maze[i][j] == 5) {
-                    characterPositionColumn = j;
-                    characterPositionRow = i;
-                }
-            }
-        }
-        redraw();
+        start = newMaze.getStartPosition();
+        end = newMaze.getGoalPosition();
+        characterPositionColumn = start.getColumnIndex();
+        characterPositionRow = start.getRowIndex();
     }
 
-    public void redraw() {
+    public void redraw(Character myChar, Wall myWall, EndPoint myEndPoint, Solve mySolve) {
         if (maze != null) {
             double canvasHeight = getHeight();
             double canvasWidth = getWidth();
@@ -76,9 +75,12 @@ public class MazeDisplayer extends Canvas {
 
 
             try {
-                Image wallImage = new Image("Blue.jpg");
-                Image characterImage = new Image("Pacman.jpg");
-
+                //Image wallImage = new Image("BlueWall.jpg");
+                //Image characterImage = new Image("Pacman.png");
+                Image wallImage = myWall.GetWall();
+                Image solutionImage = mySolve.GetSolve();
+                Image EndPointImage = myEndPoint.GetPoint();
+                Image characterImage = myChar.GetChar();
                 GraphicsContext gc = getGraphicsContext2D();
                 gc.clearRect(0, 0, getWidth(), getHeight());
                 gc.setFill(Color.BLACK);
@@ -93,12 +95,14 @@ public class MazeDisplayer extends Canvas {
                         } else if (maze[i][j] == 1) {
                             gc.fillRect(printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                             gc.drawImage(wallImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                        } else if(i == end.getRowIndex() && j == end.getColumnIndex()){
+                            gc.drawImage(EndPointImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                         } else if (maze[i][j] == 0) {
                             gc.fillRect(printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                         } else if (maze[i][j] == 5) {
-                            //characterPositionColumn = j;
-                            //characterPositionRow = i;
                             gc.drawImage(characterImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                        } else if(maze[i][j] == 2){
+                            gc.drawImage(solutionImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                         }
                         printy++;
                     }
