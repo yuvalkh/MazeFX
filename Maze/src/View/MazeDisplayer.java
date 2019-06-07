@@ -1,23 +1,11 @@
 package View;
 
 import javafx.beans.property.StringProperty;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import algorithms.mazeGenerators.*;
-
-import javax.imageio.ImageIO;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
 
 /**
  * Created by Aviadjo on 3/9/2017.
@@ -88,7 +76,7 @@ public class MazeDisplayer extends Canvas {
 
 
             try {
-                Image wallImage = new Image("BlueWall.jpg");
+                Image wallImage = new Image("Blue.jpg");
                 Image characterImage = new Image("Pacman.jpg");
 
                 GraphicsContext gc = getGraphicsContext2D();

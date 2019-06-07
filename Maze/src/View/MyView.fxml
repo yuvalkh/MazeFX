@@ -7,102 +7,163 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="954.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainController">
-   <children>
-      <SplitPane dividerPositions="0.15087605451005842" orientation="VERTICAL" prefHeight="680.0" prefWidth="950.0">
-        <items>
-          <AnchorPane>
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="12.0" prefHeight="66.0" prefWidth="747.0" text="Pacman Maze Game" textAlignment="CENTER" textFill="#eeff00" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="1.0">
-                     <font>
-                        <Font name="Arial Black" size="45.0" />
-                     </font>
-                     <effect>
-                        <DropShadow />
-                     </effect>
-                  </Label>
-               </children>
-            </AnchorPane>
-          <AnchorPane>
-               <children>
-                  <SplitPane layoutX="2.0" layoutY="-1.0" prefHeight="574.0" prefWidth="949.0">
-                    <items>
-                      <AnchorPane>
-                           <children>
-                              <SplitPane dividerPositions="0.7575227431770468" layoutX="1.0" layoutY="-6.0" orientation="VERTICAL" prefHeight="573.0" prefWidth="950.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
-                                <items>
-                                  <AnchorPane>
-                                       <cursor>
-                                          <Cursor fx:constant="DEFAULT" />
-                                       </cursor>
-                                    </AnchorPane>
-                                  <AnchorPane>
-                                       <children>
-                                          <Button contentDisplay="CENTER" defaultButton="true" layoutX="771.0" layoutY="40.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="110.0" text="Exit" textAlignment="CENTER">
-                                             <font>
-                                                <Font name="System Italic" size="12.0" />
-                                             </font>
-                                             <opaqueInsets>
-                                                <Insets />
-                                             </opaqueInsets>
-                                             <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                             </cursor>
-                                          </Button>
-                                          <Button contentDisplay="CENTER" defaultButton="true" layoutX="216.0" layoutY="40.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" text="Load Game" textAlignment="CENTER">
-                                             <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                             </cursor>
-                                             <font>
-                                                <Font name="System Italic" size="12.0" />
-                                             </font>
-                                          </Button>
-                                          <Button fx:id="StartGame" contentDisplay="CENTER" defaultButton="true" layoutX="76.0" layoutY="40.0" mnemonicParsing="false" onAction="#openMazeWindow" prefHeight="55.0" prefWidth="110.0" text="Start Game" textAlignment="CENTER">
-                                             <font>
-                                                <Font name="System Italic" size="12.0" />
-                                             </font>
-                                             <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                             </cursor>
-                                          </Button>
-                                          <Button contentDisplay="CENTER" defaultButton="true" layoutX="356.0" layoutY="40.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" text="Options" textAlignment="CENTER">
-                                             <font>
-                                                <Font name="System Italic" size="12.0" />
-                                             </font>
-                                             <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                             </cursor>
-                                          </Button>
-                                          <Button fx:id="HelpButton" contentDisplay="CENTER" defaultButton="true" layoutX="496.0" layoutY="40.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" text="Help" textAlignment="CENTER">
-                                             <font>
-                                                <Font name="System Italic" size="12.0" />
-                                             </font>
-                                             <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                             </cursor>
-                                          </Button>
-                                          <Button fx:id="AboutButton" contentDisplay="CENTER" defaultButton="true" layoutX="637.0" layoutY="40.0" mnemonicParsing="false" onAction="#openAbout" prefHeight="55.0" prefWidth="110.0" text="About" textAlignment="CENTER">
-                                             <font>
-                                                <Font name="System Italic" size="12.0" />
-                                             </font>
-                                             <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                             </cursor>
-                                          </Button>
-                                       </children>
-                                    </AnchorPane>
-                                </items>
-                              </SplitPane>
-                           </children>
-                        </AnchorPane>
-                    </items>
-                  </SplitPane>
-               </children>
-            </AnchorPane>
-        </items>
-      </SplitPane>
-   </children>
-</AnchorPane>
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="672.0" prefWidth="953.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainController">
+    <children>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="682.0" prefWidth="955.0">
+            <children>
+                <StackPane>
+                    <children>
+                        <SplitPane dividerPositions="0.15087605451005842" orientation="VERTICAL" prefHeight="680.0" prefWidth="950.0">
+                            <items>
+                                <StackPane>
+                                    <children>
+                                        <AnchorPane>
+                                            <children>
+                                                <StackPane layoutX="1.0" layoutY="-8.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="1.0">
+                                                    <children>
+                                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="747.0" text="Pacman Maze Game" textAlignment="CENTER" textFill="#eeff00">
+                                                            <font>
+                                                                <Font name="Arial Black" size="45.0" />
+                                                            </font>
+                                                            <effect>
+                                                                <DropShadow />
+                                                            </effect>
+                                                        </Label>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </AnchorPane>
+                                    </children>
+                                </StackPane>
+                                <StackPane>
+                                    <children>
+                                        <AnchorPane prefHeight="455.0" prefWidth="901.0">
+                                            <children>
+                                                <StackPane layoutX="2.0" layoutY="-1.0">
+                                                    <children>
+                                                        <SplitPane prefHeight="574.0" prefWidth="949.0">
+                                                            <items>
+                                                                <StackPane>
+                                                                    <children>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <StackPane layoutX="1.0" layoutY="1.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
+                                                                                    <children>
+                                                                                        <SplitPane dividerPositions="0.8713984539704849" orientation="VERTICAL" prefHeight="573.0" prefWidth="950.0">
+                                                                                            <items>
+                                                                                                <StackPane>
+                                                                                                    <children>
+                                                                                                        <AnchorPane>
+                                                                                                            <cursor>
+                                                                                                                <Cursor fx:constant="DEFAULT" />
+                                                                                                            </cursor>
+                                                                                                        </AnchorPane>
+                                                                                                    </children>
+                                                                                                </StackPane>
+                                                                                                <StackPane>
+                                                                                                    <children>
+                                                                                                        <AnchorPane>
+                                                                                                            <children>
+                                                                                                                <StackPane layoutY="-1.0">
+                                                                                                                    <children>
+                                                                                                                        <HBox prefWidth="945.0">
+                                                                                                                            <children>
+                                                                                                                                <StackPane>
+                                                                                                                                    <children>
+                                                                                                                                        <Button fx:id="StartGame" contentDisplay="CENTER" defaultButton="true" minHeight="100.0" minWidth="190.0" mnemonicParsing="false" onAction="#openMazeWindow" prefWidth="110.0" text="Start Game" textAlignment="CENTER">
+                                                                                                                                            <font>
+                                                                                                                                                <Font name="System Italic" size="12.0" />
+                                                                                                                                            </font>
+                                                                                                                                            <cursor>
+                                                                                                                                                <Cursor fx:constant="HAND" />
+                                                                                                                                            </cursor>
+                                                                                                                                        </Button>
+                                                                                                                                    </children>
+                                                                                                                                </StackPane>
+                                                                                                                                <StackPane>
+                                                                                                                                    <children>
+                                                                                                                                        <Button contentDisplay="CENTER" defaultButton="true" minHeight="100.0" minWidth="190.0" mnemonicParsing="false" prefWidth="110.0" text="Options" textAlignment="CENTER">
+                                                                                                                                            <font>
+                                                                                                                                                <Font name="System Italic" size="12.0" />
+                                                                                                                                            </font>
+                                                                                                                                            <cursor>
+                                                                                                                                                <Cursor fx:constant="HAND" />
+                                                                                                                                            </cursor>
+                                                                                                                                        </Button>
+                                                                                                                                    </children>
+                                                                                                                                </StackPane>
+                                                                                                                                <StackPane>
+                                                                                                                                    <children>
+                                                                                                                                        <Button fx:id="AboutButton" contentDisplay="CENTER" defaultButton="true" minHeight="100.0" minWidth="190.0" mnemonicParsing="false" onAction="#openAbout" prefWidth="110.0" text="About" textAlignment="CENTER">
+                                                                                                                                            <font>
+                                                                                                                                                <Font name="System Italic" size="12.0" />
+                                                                                                                                            </font>
+                                                                                                                                            <cursor>
+                                                                                                                                                <Cursor fx:constant="HAND" />
+                                                                                                                                            </cursor>
+                                                                                                                                        </Button>
+                                                                                                                                    </children>
+                                                                                                                                </StackPane>
+                                                                                                                                <StackPane>
+                                                                                                                                    <children>
+                                                                                                                                        <Button fx:id="HelpButton" contentDisplay="CENTER" defaultButton="true" minHeight="100.0" minWidth="190.0" mnemonicParsing="false" prefWidth="110.0" text="Help" textAlignment="CENTER">
+                                                                                                                                            <font>
+                                                                                                                                                <Font name="System Italic" size="12.0" />
+                                                                                                                                            </font>
+                                                                                                                                            <cursor>
+                                                                                                                                                <Cursor fx:constant="HAND" />
+                                                                                                                                            </cursor>
+                                                                                                                                        </Button>
+                                                                                                                                    </children>
+                                                                                                                                </StackPane>
+                                                                                                                                <StackPane prefHeight="0.0" prefWidth="110.0">
+                                                                                                                                    <children>
+                                                                                                                                        <Button contentDisplay="CENTER" defaultButton="true" minHeight="100.0" minWidth="190.0" mnemonicParsing="false" prefHeight="250.0" prefWidth="250.0" text="Exit" textAlignment="CENTER">
+                                                                                                                                            <font>
+                                                                                                                                                <Font name="System Italic" size="12.0" />
+                                                                                                                                            </font>
+                                                                                                                                            <opaqueInsets>
+                                                                                                                                                <Insets />
+                                                                                                                                            </opaqueInsets>
+                                                                                                                                            <cursor>
+                                                                                                                                                <Cursor fx:constant="HAND" />
+                                                                                                                                            </cursor>
+                                                                                                                                        </Button>
+                                                                                                                                    </children>
+                                                                                                                                </StackPane>
+                                                                                                                            </children>
+                                                                                                                        </HBox>
+                                                                                                                    </children>
+                                                                                                                </StackPane>
+                                                                                                            </children>
+                                                                                                        </AnchorPane>
+                                                                                                    </children>
+                                                                                                </StackPane>
+                                                                                            </items>
+                                                                                        </SplitPane>
+                                                                                    </children>
+                                                                                </StackPane>
+                                                                            </children>
+                                                                        </AnchorPane>
+                                                                    </children>
+                                                                </StackPane>
+                                                            </items>
+                                                        </SplitPane>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </AnchorPane>
+                                    </children>
+                                </StackPane>
+                            </items>
+                        </SplitPane>
+                    </children>
+                </StackPane>
+            </children>
+        </AnchorPane>
+    </children>
+</StackPane>
