@@ -21,12 +21,12 @@
                                 </StackPane>
                                 <StackPane layoutY="341.0" prefHeight="168.0" prefWidth="280.0">
                                     <children>
-                                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Load Maze" />
+                                        <Button fx:id="LoadButton" mnemonicParsing="false" onAction="#openChoosingLoadedGame" prefHeight="40.0" prefWidth="150.0" text="Load Maze" />
                                     </children>
                                 </StackPane>
                                 <StackPane layoutY="173.0" prefHeight="168.0" prefWidth="280.0">
                                     <children>
-                                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Save Game" />
+                                        <Button fx:id="SaveGame" mnemonicParsing="false" onAction="#saveGame" prefHeight="40.0" prefWidth="150.0" text="Save Game" />
                                     </children>
                                 </StackPane>
                                 <StackPane layoutY="509.0" prefHeight="168.0" prefWidth="280.0">

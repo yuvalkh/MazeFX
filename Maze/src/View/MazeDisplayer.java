@@ -28,10 +28,19 @@ public class MazeDisplayer extends Canvas {
     double characterPositionColumn;
     double characterPositionRow;
     int zoom = 10;
-    Position start;
-    Position end;
+    //Position start;
+    //Position end;
 
-    private int[][] maze;
+    //private int[][] maze;
+    private Maze maze;
+
+    public int getZoom(){
+        return zoom;
+    }
+
+    public void setZoom(int Zoom){
+        this.zoom = Zoom;
+    }
 
     public void ZoomOut() {
         this.zoom++;
@@ -41,29 +50,16 @@ public class MazeDisplayer extends Canvas {
         this.zoom--;
     }
 
-    public void setDimentions(int[][] maze) {
-        this.maze = maze;
-        for (int i = 0; i < maze.length; i++) {
-            for (int j = 0; j < maze[i].length; j++) {
-                if (maze[i][j] == 5) {
-                    characterPositionColumn = j;
-                    characterPositionRow = i;
-                }
-            }
-        }
+
+    public void updatePlayerSpot(double positionRow,double positionColumn){
+        characterPositionRow = positionRow;
+        characterPositionColumn = positionColumn;
     }
 
     public void setDimentions(Maze newMaze) {
-        maze = new int[newMaze.getNumOfRows()][newMaze.getNumOfColumns()];
-        for (int i = 0; i < newMaze.getNumOfRows(); i++) {
-            for (int j = 0; j < newMaze.getNumOfColumns(); j++) {
-                maze[i][j] = newMaze.getMazeInfo(i, j);
-            }
-        }
-        start = newMaze.getStartPosition();
-        end = newMaze.getGoalPosition();
-        characterPositionColumn = start.getColumnIndex();
-        characterPositionRow = start.getRowIndex();
+        maze = new Maze(newMaze);
+        characterPositionColumn = maze.getStartPosition().getColumnIndex();
+        characterPositionRow = maze.getStartPosition().getRowIndex();
     }
 
     public void redraw(Character myChar, Wall myWall, EndPoint myEndPoint, Solve mySolve) {
@@ -90,18 +86,18 @@ public class MazeDisplayer extends Canvas {
                 //Draw Maze
                 for (int i = (int) characterPositionRow - zoom; i <= (int) characterPositionRow + zoom; i++) {
                     for (int j = (int) characterPositionColumn - zoom; j <= (int) characterPositionColumn + zoom; j++) {
-                        if (i < 0 || j < 0 || i >= maze.length || j >= maze[i].length) {
+                        if (i < 0 || j < 0 || i >= maze.getNumOfRows() || j >= maze.getNumOfColumns()) {
                             gc.fillRect(printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
-                        } else if (maze[i][j] == 1) {
+                        } else if (maze.getMazeInfo(i,j) == 1) {
                             gc.fillRect(printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                             gc.drawImage(wallImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
-                        } else if(i == end.getRowIndex() && j == end.getColumnIndex()){
+                        } else if(i == maze.getGoalPosition().getRowIndex() && j == maze.getGoalPosition().getColumnIndex()){
                             gc.drawImage(EndPointImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
-                        } else if (maze[i][j] == 0) {
+                        } else if (maze.getMazeInfo(i,j) == 0) {
                             gc.fillRect(printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
-                        } else if (maze[i][j] == 5) {
+                        } else if (maze.getMazeInfo(i,j) == 5) {
                             gc.drawImage(characterImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
-                        } else if(maze[i][j] == 2){
+                        } else if(maze.getMazeInfo(i,j) == 2){
                             gc.drawImage(solutionImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                         }
                         printy++;
