@@ -18,11 +18,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -40,17 +43,27 @@ public class MainController {
     public javafx.scene.control.Button HelpButton;
     public javafx.scene.control.Button AboutButton;
 
-    static int gameID = 0;
+    //static int gameID = 0;
     SearchableMaze solveMaze;
     Position PlayerSpot;
     //int[][] maze;
     Maze maze;
-    Character character;
-    EndPoint endPoint;
-    Solve solve;
-    Wall wall;
+    Character character =new Character(new Image("PacmanRight.png"));
+    EndPoint endPoint = new EndPoint(new Image("EndPoint.png"));
+    Solve solve = new Solve(new Image("Food.jpg"));
+    Wall wall = new Wall(new Image("BlueWall.jpg"));
+    boolean isControlPressed;
+
+    public void handleKeyReleased(KeyEvent ke){
+        if(ke.getCode() == KeyCode.CONTROL){
+            isControlPressed = false;
+        }
+    }
 
     public void handleKeyPressed(KeyEvent ke) {
+        if(ke.getCode() == KeyCode.CONTROL){
+            isControlPressed = true;
+        }
         if (ke.getCode() == KeyCode.RIGHT) {
             if (PlayerSpot.getColumnIndex() < maze.getNumOfColumns() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex() + 1) != 1) {
                 maze.setMazeInfo(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex(),0);
@@ -106,6 +119,9 @@ public class MainController {
                 //showAlert("You can't walk left anymore","no way");
             }
         }
+        if(PlayerSpot.getColumnIndex() == maze.getGoalPosition().getColumnIndex() && PlayerSpot.getRowIndex() == maze.getGoalPosition().getRowIndex()){
+            endGame();
+        }
     }
 
     /*public void openMazeWindow() throws IOException {
@@ -142,30 +158,67 @@ public class MainController {
      *
      */
     public void saveGame() throws IOException, URISyntaxException {
-        FileOutputStream f = new FileOutputStream(new File(getClass().getResource("/SavedGames").getPath() + "/Game"+ gameID +".txt"));
-        ObjectOutputStream o = new ObjectOutputStream(f);
-        String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
-        //write the maze,player's spot, Current zoom
-        o.writeObject(timeStamp);
-        o.write(maze.getNumOfRows());
-        o.write(maze.getNumOfColumns());
-        o.writeObject(maze.toByteArray());
-        o.writeObject(PlayerSpot);
-        o.write(mazeDisplayer.getZoom());
-        o.write(gameID);
-        o.close();
-        f.close();
-        gameID++;
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Saving Maze");
+        String[] saveName = new String[1];
+        dialog.setHeaderText("Enter the name of your save file:");
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(name -> {
+            saveName[0] = name;
+        });
+        if (!saveName[0].equals("")) {
+            if (!SaveFileExist(saveName[0])) {
+                FileOutputStream f = new FileOutputStream(new File(getClass().getResource("/SavedGames").getPath() + "/" + saveName[0]));
+                ObjectOutputStream o = new ObjectOutputStream(f);
+                String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
+                //write the maze,player's spot, Current zoom
+                o.writeObject(timeStamp);
+                o.write(maze.getNumOfRows());
+                o.write(maze.getNumOfColumns());
+                o.writeObject(maze.toByteArray());
+                o.writeObject(PlayerSpot);
+                o.write(mazeDisplayer.getZoom());
+                o.writeObject(saveName[0]);
+                o.close();
+                f.close();
+            }
+            else{
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("It seems like there is already a save file called like this");
+                alert.setContentText("Do you wish to overwrite it?");
+
+                Optional<ButtonType> result2 = alert.showAndWait();
+                if (result2.get() == ButtonType.OK){
+                    FileOutputStream f = new FileOutputStream(new File(getClass().getResource("/SavedGames").getPath() + "/" + saveName[0]));
+                    ObjectOutputStream o = new ObjectOutputStream(f);
+                    String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
+                    //write the maze,player's spot, Current zoom
+                    o.writeObject(timeStamp);
+                    o.write(maze.getNumOfRows());
+                    o.write(maze.getNumOfColumns());
+                    o.writeObject(maze.toByteArray());
+                    o.writeObject(PlayerSpot);
+                    o.write(mazeDisplayer.getZoom());
+                    o.writeObject(saveName[0]);
+                    o.close();
+                    f.close();
+                } else {
+
+                }
+            }
+        }
     }
 
-    /*private int getHighestGameID(){
+    private boolean SaveFileExist(String fileName){
         final File folder = new File(getClass().getResource("/SavedGames").getPath());
-        int maxID = 0;
         for (final File fileEntry : folder.listFiles()) {
-
+            if(fileName.equals(fileEntry.getName())){
+                return true;
+            }
         }
-        return maxID;
-    }*/
+        return false;
+    }
 
     /**
      * need to save:
@@ -174,8 +227,8 @@ public class MainController {
      * Zoom
      *
      */
-    public void loadGame(int id) throws IOException, ClassNotFoundException {
-        FileInputStream fi = new FileInputStream(new File(getClass().getResource("/SavedGames").getPath() + "/Game"+ id +".txt"));
+    public void loadGame(String GameName) throws IOException, ClassNotFoundException {
+        FileInputStream fi = new FileInputStream(new File(getClass().getResource("/SavedGames").getPath() + "/" + GameName));
         ObjectInputStream oi = new ObjectInputStream(fi);
         //read the maze and the solutions
         String Date = (String)oi.readObject();
@@ -187,9 +240,13 @@ public class MainController {
         oi.close();
         fi.close();
         Maze LoadMaze = new Maze(bytedLoadedMaze);
-        mazeDisplayer.updatePlayerSpot(loadedPosition.getRowIndex(),loadedPosition.getColumnIndex());
+        maze = LoadMaze;
+        PlayerSpot = loadedPosition;
         mazeDisplayer.setDimentions(LoadMaze);
+        mazeDisplayer.updatePlayerSpot(loadedPosition.getRowIndex(),loadedPosition.getColumnIndex());
         mazeDisplayer.setZoom(zoom);
+        solveMaze = new SearchableMaze(LoadMaze);
+        mazeDisplayer.redraw(character,wall,endPoint,solve);
         //now we can set all the properties
     }
 
@@ -205,8 +262,8 @@ public class MainController {
         table.setPrefWidth(300);
         //table.setEditable(true);
 
-        TableColumn GameIdCol = new TableColumn("GameID");
-        GameIdCol.setCellValueFactory(new PropertyValueFactory<>("GameID"));
+        TableColumn GameIdCol = new TableColumn("GameName");
+        GameIdCol.setCellValueFactory(new PropertyValueFactory<>("GameName"));
         TableColumn DimensionsCol = new TableColumn("Dimensions");
         DimensionsCol.setCellValueFactory(new PropertyValueFactory<>("Dimensions"));
         TableColumn PlayerPositionCol = new TableColumn("PlayerPosition");
@@ -224,7 +281,8 @@ public class MainController {
                 LoadedGame SelectedGame = (LoadedGame)table.getSelectionModel().getSelectedItem();
                 if(SelectedGame != null) {//load the game
                     try {
-                        loadGame(Integer.parseInt(SelectedGame.getGameID()));
+                        loadGame(SelectedGame.getGameName());
+                        stage.close();
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     } catch (ClassNotFoundException e1) {
@@ -253,8 +311,8 @@ public class MainController {
             byte[] bytedLoadedMaze = (byte[]) oi.readObject();
             Position loadedPosition = (Position) oi.readObject();
             int zoom = oi.read();
-            int gameid = oi.read();
-            LoadedGame lg = new LoadedGame(Integer.toString(gameid),Date,  NumOfRows+ "x" +NumOfColumns,loadedPosition.getRowIndex()+","+loadedPosition.getColumnIndex());
+            String gameid = fileEntry.getName();
+            LoadedGame lg = new LoadedGame(gameid,Date,  NumOfRows+ "x" +NumOfColumns,loadedPosition.getRowIndex()+","+loadedPosition.getColumnIndex());
             table.getItems().add(lg);
             oi.close();
             fi.close();
@@ -320,10 +378,6 @@ public class MainController {
     }
 
     public void generateMaze() {
-        character = new Character(new Image("PacmanRight.png"));
-        endPoint = new EndPoint(new Image("EndPoint.png"));
-        solve = new Solve(new Image("Food.jpg"));
-        wall = new Wall(new Image("BlueWall.jpg"));
         int[] RowsAndCols = new int[2];
         RowsAndCols = getDimensionsFromDialog();
 
@@ -351,6 +405,23 @@ public class MainController {
                 "here you can see everything about us", "About");
     }
 
+    public void zoom(ScrollEvent se){
+        if(isControlPressed){
+            if(se.getDeltaY() > 0) {
+                mazeDisplayer.ZoomIn();
+            }
+            else{
+                mazeDisplayer.ZoomOut();
+            }
+            mazeDisplayer.redraw(character,wall,endPoint,solve);
+        }
+    }
+
+    public void endGame(){
+        showAlert("kaley kaloot limon sahoot","ez pz lemon squizy");
+
+    }
+
     public void solveMaze(ActionEvent actionEvent) {
         BestFirstSearch bfs = new BestFirstSearch();
         solveMaze.setStartPosition(PlayerSpot);
@@ -370,6 +441,7 @@ public class MainController {
             }
         }
         mazeDisplayer.setDimentions(maze);
+        mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex());
         mazeDisplayer.redraw(character, wall, endPoint, solve);
     }
 

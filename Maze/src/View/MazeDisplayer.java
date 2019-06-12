@@ -47,7 +47,9 @@ public class MazeDisplayer extends Canvas {
     }
 
     public void ZoomIn() {
-        this.zoom--;
+        if(zoom > 2) {
+            this.zoom--;
+        }
     }
 
 

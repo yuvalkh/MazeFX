@@ -6,7 +6,7 @@
 <!-- -
 <!- -->
 
-<StackPane onKeyPressed="#handleKeyPressed" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainController" stylesheets="@MainStyle.css">
+<StackPane onScroll="#zoom" onKeyReleased="#handleKeyReleased" onKeyPressed="#handleKeyPressed" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainController" stylesheets="@MainStyle.css">
     <children>
         <SplitPane dividerPositions="0.29797979797979796" prefHeight="160.0" prefWidth="200.0">
             <items>

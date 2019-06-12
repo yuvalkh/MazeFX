@@ -1,13 +1,13 @@
 package View;
 
 public class LoadedGame {
-    private String GameID;
+    private String GameName;
     private String Date;
     private String Dimensions;
     private String PlayerPosition;
 
-    public LoadedGame(String GameID, String date, String dimensions, String playerPosition) {
-        this.GameID = GameID;
+    public LoadedGame(String GameName, String date, String dimensions, String playerPosition) {
+        this.GameName = GameName;
         Date = date;
         Dimensions = dimensions;
         PlayerPosition = playerPosition;
@@ -17,12 +17,12 @@ public class LoadedGame {
         return Date;
     }
 
-    public String getGameID() {
-        return GameID;
+    public String getGameName() {
+        return GameName;
     }
 
-    public void setGameID(String gameID) {
-        GameID = gameID;
+    public void setGameName(String gameName) {
+        GameName = gameName;
     }
 
     public void setDate(String date) {
