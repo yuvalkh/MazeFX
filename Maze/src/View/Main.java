@@ -15,7 +15,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
 
         primaryStage.setTitle("MazeGame");
-        Parent root = FXMLLoader.load(getClass().getResource("MyView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("StartPage.fxml"));
 
         StackPane pane = new StackPane();
         Scene scene = new Scene(pane,950,680);
@@ -32,6 +32,8 @@ public class Main extends Application {
 
 
         primaryStage.setScene(scene);
+        primaryStage.setMinHeight(600);
+        primaryStage.setMinWidth(600);
         primaryStage.show();
 
     }

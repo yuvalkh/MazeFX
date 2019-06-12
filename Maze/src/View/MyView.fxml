@@ -11,8 +11,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="672.0" prefWidth="953.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainController">
-    <children>
+<StackPane  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="672.0" prefWidth="953.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainController">
+    <children >
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="682.0" prefWidth="955.0">
             <children>
                 <StackPane>
@@ -98,7 +98,7 @@
                                                                                                                                 </StackPane>
                                                                                                                                 <StackPane>
                                                                                                                                     <children>
-                                                                                                                                        <Button fx:id="AboutButton" contentDisplay="CENTER" defaultButton="true" minHeight="100.0" minWidth="190.0" mnemonicParsing="false" onAction="#openAbout" prefWidth="110.0" text="About" textAlignment="CENTER">
+                                                                                                                                        <Button  fx:id="AboutButton" contentDisplay="CENTER" defaultButton="true" minHeight="100.0" minWidth="190.0" mnemonicParsing="false" onAction="#openTestWindow" prefWidth="110.0" text="About" textAlignment="CENTER">
                                                                                                                                             <font>
                                                                                                                                                 <Font name="System Italic" size="12.0" />
                                                                                                                                             </font>

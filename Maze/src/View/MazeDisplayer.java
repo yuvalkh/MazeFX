@@ -64,7 +64,7 @@ public class MazeDisplayer extends Canvas {
         characterPositionRow = maze.getStartPosition().getRowIndex();
     }
 
-    public void redraw(Character myChar, Wall myWall, EndPoint myEndPoint, Solve mySolve) {
+    public void redraw(Character myChar, Wall myWall, EndPoint myEndPoint, Solve mySolve,Floor myFloor) {
         if (maze != null) {
             double canvasHeight = getHeight();
             double canvasWidth = getWidth();
@@ -79,6 +79,7 @@ public class MazeDisplayer extends Canvas {
                 Image solutionImage = mySolve.GetSolve();
                 Image EndPointImage = myEndPoint.GetPoint();
                 Image characterImage = myChar.GetChar();
+                Image floorImage = myFloor.GetFloor();
                 GraphicsContext gc = getGraphicsContext2D();
                 gc.clearRect(0, 0, getWidth(), getHeight());
                 gc.setFill(Color.BLACK);
@@ -96,7 +97,7 @@ public class MazeDisplayer extends Canvas {
                         } else if(i == maze.getGoalPosition().getRowIndex() && j == maze.getGoalPosition().getColumnIndex()){
                             gc.drawImage(EndPointImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                         } else if (maze.getMazeInfo(i,j) == 0) {
-                            gc.fillRect(printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                            gc.drawImage(floorImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                         } else if (maze.getMazeInfo(i,j) == 5) {
                             gc.drawImage(characterImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                         } else if(maze.getMazeInfo(i,j) == 2){

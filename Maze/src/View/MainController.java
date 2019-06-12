@@ -48,78 +48,91 @@ public class MainController {
     Position PlayerSpot;
     //int[][] maze;
     Maze maze;
-    Character character =new Character(new Image("PacmanRight.png"));
-    EndPoint endPoint = new EndPoint(new Image("EndPoint.png"));
-    Solve solve = new Solve(new Image("Food.jpg"));
-    Wall wall = new Wall(new Image("BlueWall.jpg"));
+    Character character = new Character(new Image("/Images/pikachuRun.gif"));
+    EndPoint endPoint = new EndPoint(new Image("/Images/EndPoint.png"));
+    Solve solve = new Solve(new Image("/Images/Food.jpg"));
+    Wall wall = new Wall(new Image("/Images/BlueWall.jpg"));
+    Floor floor = new Floor(new Image("/Images/Floor.png"));
     boolean isControlPressed;
 
-    public void handleKeyReleased(KeyEvent ke){
-        if(ke.getCode() == KeyCode.CONTROL){
+    public void handleKeyReleased(KeyEvent ke) {
+        if (ke.getCode() == KeyCode.CONTROL) {
             isControlPressed = false;
         }
     }
 
+    public void openTestWindow() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("MainTest.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setTitle("Tests");
+        stage.setScene(scene);
+        stage.show();
+        Stage oldStage = (Stage) StartGame.getScene().getWindow();
+        oldStage.close();
+    }
+
     public void handleKeyPressed(KeyEvent ke) {
-        if(ke.getCode() == KeyCode.CONTROL){
+        if (ke.getCode() == KeyCode.CONTROL) {
             isControlPressed = true;
         }
         if (ke.getCode() == KeyCode.RIGHT) {
-            if (PlayerSpot.getColumnIndex() < maze.getNumOfColumns() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex() + 1) != 1) {
-                maze.setMazeInfo(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex(),0);
+            if (PlayerSpot.getColumnIndex() < maze.getNumOfColumns() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex() + 1) != 1) {
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
                 PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() + 1);
-                maze.setMazeInfo(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex(),5);
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
                 mazeDisplayer.setDimentions(maze);
-                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex());
-                character = new Character(new Image("PacmanRight.png"));
-                mazeDisplayer.redraw(character, wall, endPoint, solve);
+                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                character = new Character(new Image("Images/PacmanRight.png"));
+                mazeDisplayer.redraw(character, wall, endPoint, solve, floor);
             } else {
                 //showAlert("You can't walk right anymore","no way");
             }
         }
         if (ke.getCode() == KeyCode.DOWN) {
-            if (PlayerSpot.getRowIndex() < maze.getNumOfRows() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex() + 1,PlayerSpot.getColumnIndex()) != 1) {
-                maze.setMazeInfo(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex(),0);
+            if (PlayerSpot.getRowIndex() < maze.getNumOfRows() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex() + 1, PlayerSpot.getColumnIndex()) != 1) {
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
                 PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() + 1);
-                maze.setMazeInfo(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex(),5);
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
                 mazeDisplayer.setDimentions(maze);
-                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex());
-                character = new Character(new Image("PacmanDown.png"));
-                mazeDisplayer.redraw(character, wall, endPoint, solve);
+                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                character = new Character(new Image("Images/PacmanDown.png"));
+                mazeDisplayer.redraw(character, wall, endPoint, solve, floor);
             } else {
 
                 //showAlert("You can't walk down anymore","no way");
             }
         }
         if (ke.getCode() == KeyCode.UP) {
-            if (PlayerSpot.getRowIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex() - 1,PlayerSpot.getColumnIndex()) != 1) {
-                maze.setMazeInfo(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex(),0);
+            if (PlayerSpot.getRowIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex() - 1, PlayerSpot.getColumnIndex()) != 1) {
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
                 PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() - 1);
-                maze.setMazeInfo(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex(),5);
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
                 mazeDisplayer.setDimentions(maze);
-                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex());
-                character = new Character(new Image("PacmanUp.png"));
-                mazeDisplayer.redraw(character, wall, endPoint, solve);
+                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                character = new Character(new Image("Images/PacmanUp.png"));
+                mazeDisplayer.redraw(character, wall, endPoint, solve, floor);
             } else {
                 //showAlert("You can't walk up anymore","no way");
 
             }
         }
         if (ke.getCode() == KeyCode.LEFT) {
-            if (PlayerSpot.getColumnIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex() - 1) != 1) {
-                maze.setMazeInfo(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex(),0);
+            if (PlayerSpot.getColumnIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex() - 1) != 1) {
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
                 PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() - 1);
-                maze.setMazeInfo(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex(),5);
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
                 mazeDisplayer.setDimentions(maze);
-                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex());
-                character = new Character(new Image("PacmanLeft.png"));
-                mazeDisplayer.redraw(character, wall, endPoint, solve);
+                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                character = new Character(new Image("Images/PacmanLeft.png"));
+                mazeDisplayer.redraw(character, wall, endPoint, solve, floor);
             } else {
 
                 //showAlert("You can't walk left anymore","no way");
             }
         }
-        if(PlayerSpot.getColumnIndex() == maze.getGoalPosition().getColumnIndex() && PlayerSpot.getRowIndex() == maze.getGoalPosition().getRowIndex()){
+        if (PlayerSpot.getColumnIndex() == maze.getGoalPosition().getColumnIndex() && PlayerSpot.getRowIndex() == maze.getGoalPosition().getRowIndex()) {
             endGame();
         }
     }
@@ -155,7 +168,6 @@ public class MainController {
      * player's spot
      * Maze
      * Zoom
-     *
      */
     public void saveGame() throws IOException, URISyntaxException {
         TextInputDialog dialog = new TextInputDialog();
@@ -181,15 +193,14 @@ public class MainController {
                 o.writeObject(saveName[0]);
                 o.close();
                 f.close();
-            }
-            else{
+            } else {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Dialog");
                 alert.setHeaderText("It seems like there is already a save file called like this");
                 alert.setContentText("Do you wish to overwrite it?");
 
                 Optional<ButtonType> result2 = alert.showAndWait();
-                if (result2.get() == ButtonType.OK){
+                if (result2.get() == ButtonType.OK) {
                     FileOutputStream f = new FileOutputStream(new File(getClass().getResource("/SavedGames").getPath() + "/" + saveName[0]));
                     ObjectOutputStream o = new ObjectOutputStream(f);
                     String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
@@ -210,10 +221,10 @@ public class MainController {
         }
     }
 
-    private boolean SaveFileExist(String fileName){
+    private boolean SaveFileExist(String fileName) {
         final File folder = new File(getClass().getResource("/SavedGames").getPath());
         for (final File fileEntry : folder.listFiles()) {
-            if(fileName.equals(fileEntry.getName())){
+            if (fileName.equals(fileEntry.getName())) {
                 return true;
             }
         }
@@ -225,13 +236,12 @@ public class MainController {
      * player's spot
      * Maze
      * Zoom
-     *
      */
     public void loadGame(String GameName) throws IOException, ClassNotFoundException {
         FileInputStream fi = new FileInputStream(new File(getClass().getResource("/SavedGames").getPath() + "/" + GameName));
         ObjectInputStream oi = new ObjectInputStream(fi);
         //read the maze and the solutions
-        String Date = (String)oi.readObject();
+        String Date = (String) oi.readObject();
         int NumOfRows = oi.read();
         int NumOfColumns = oi.read();
         byte[] bytedLoadedMaze = (byte[]) oi.readObject();
@@ -243,10 +253,10 @@ public class MainController {
         maze = LoadMaze;
         PlayerSpot = loadedPosition;
         mazeDisplayer.setDimentions(LoadMaze);
-        mazeDisplayer.updatePlayerSpot(loadedPosition.getRowIndex(),loadedPosition.getColumnIndex());
+        mazeDisplayer.updatePlayerSpot(loadedPosition.getRowIndex(), loadedPosition.getColumnIndex());
         mazeDisplayer.setZoom(zoom);
         solveMaze = new SearchableMaze(LoadMaze);
-        mazeDisplayer.redraw(character,wall,endPoint,solve);
+        mazeDisplayer.redraw(character, wall, endPoint, solve, floor);
         //now we can set all the properties
     }
 
@@ -271,15 +281,16 @@ public class MainController {
         TableColumn DateCol = new TableColumn("Date");
         DateCol.setCellValueFactory(new PropertyValueFactory<>("Date"));
 
-        table.getColumns().addAll(GameIdCol, DimensionsCol, PlayerPositionCol,DateCol);
+        table.getColumns().addAll(GameIdCol, DimensionsCol, PlayerPositionCol, DateCol);
 
         Button LoadButton = new Button("Load");
         Button ExitButton = new Button("Exit");
 
         LoadButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                LoadedGame SelectedGame = (LoadedGame)table.getSelectionModel().getSelectedItem();
-                if(SelectedGame != null) {//load the game
+            @Override
+            public void handle(ActionEvent e) {
+                LoadedGame SelectedGame = (LoadedGame) table.getSelectionModel().getSelectedItem();
+                if (SelectedGame != null) {//load the game
                     try {
                         loadGame(SelectedGame.getGameName());
                         stage.close();
@@ -288,14 +299,14 @@ public class MainController {
                     } catch (ClassNotFoundException e1) {
                         e1.printStackTrace();
                     }
-                }
-                else{
-                    showAlert("Please choose a game to load","oh hell no");
+                } else {
+                    showAlert("Please choose a game to load", "oh hell no");
                 }
             }
         });
         ExitButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
+            @Override
+            public void handle(ActionEvent e) {
                 stage.close();
             }
         });
@@ -305,14 +316,14 @@ public class MainController {
             FileInputStream fi = new FileInputStream(fileEntry);
             ObjectInputStream oi = new ObjectInputStream(fi);
             //read the properties
-            String Date = (String)oi.readObject();
+            String Date = (String) oi.readObject();
             int NumOfRows = oi.read();
             int NumOfColumns = oi.read();
             byte[] bytedLoadedMaze = (byte[]) oi.readObject();
             Position loadedPosition = (Position) oi.readObject();
             int zoom = oi.read();
             String gameid = fileEntry.getName();
-            LoadedGame lg = new LoadedGame(gameid,Date,  NumOfRows+ "x" +NumOfColumns,loadedPosition.getRowIndex()+","+loadedPosition.getColumnIndex());
+            LoadedGame lg = new LoadedGame(gameid, Date, NumOfRows + "x" + NumOfColumns, loadedPosition.getRowIndex() + "," + loadedPosition.getColumnIndex());
             table.getItems().add(lg);
             oi.close();
             fi.close();
@@ -322,7 +333,7 @@ public class MainController {
         VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(label, table,LoadButton,ExitButton);
+        vbox.getChildren().addAll(label, table, LoadButton, ExitButton);
 
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
 
@@ -387,9 +398,9 @@ public class MainController {
             maze = GeneratedMaze;
             solveMaze = new SearchableMaze(GeneratedMaze);
             PlayerSpot = new Position(GeneratedMaze.getStartPosition().getRowIndex(), GeneratedMaze.getStartPosition().getColumnIndex());
-            maze.setMazeInfo(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex(), 5);
+            maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
             mazeDisplayer.setDimentions(maze);
-            mazeDisplayer.redraw(character, wall, endPoint, solve);
+            mazeDisplayer.redraw(character, wall, endPoint, solve, floor);
         }
     }
 
@@ -405,20 +416,19 @@ public class MainController {
                 "here you can see everything about us", "About");
     }
 
-    public void zoom(ScrollEvent se){
-        if(isControlPressed){
-            if(se.getDeltaY() > 0) {
+    public void zoom(ScrollEvent se) {
+        if (isControlPressed) {
+            if (se.getDeltaY() > 0) {
                 mazeDisplayer.ZoomIn();
-            }
-            else{
+            } else {
                 mazeDisplayer.ZoomOut();
             }
-            mazeDisplayer.redraw(character,wall,endPoint,solve);
+            mazeDisplayer.redraw(character, wall, endPoint, solve, floor);
         }
     }
 
-    public void endGame(){
-        showAlert("kaley kaloot limon sahoot","ez pz lemon squizy");
+    public void endGame() {
+        showAlert("kaley kaloot limon sahoot", "ez pz lemon squizy");
 
     }
 
@@ -430,19 +440,19 @@ public class MainController {
         int i;
         for (int j = 0; j < maze.getNumOfRows(); j++) {
             for (int k = 0; k < maze.getNumOfColumns(); k++) {
-                if(maze.getMazeInfo(j,k) == 2){
-                    maze.setMazeInfo(j,k,0);
+                if (maze.getMazeInfo(j, k) == 2) {
+                    maze.setMazeInfo(j, k, 0);
                 }
             }
         }
         for (i = 0; i < solutionPath.size(); ++i) {
-            if(maze.getMazeInfo(((MazeState) solutionPath.get(i)).getCurrentPosition().getRowIndex(),((MazeState) solutionPath.get(i)).getCurrentPosition().getColumnIndex()) == 0){
-                maze.setMazeInfo(((MazeState) solutionPath.get(i)).getCurrentPosition().getRowIndex(),((MazeState) solutionPath.get(i)).getCurrentPosition().getColumnIndex(), 2);
+            if (maze.getMazeInfo(((MazeState) solutionPath.get(i)).getCurrentPosition().getRowIndex(), ((MazeState) solutionPath.get(i)).getCurrentPosition().getColumnIndex()) == 0) {
+                maze.setMazeInfo(((MazeState) solutionPath.get(i)).getCurrentPosition().getRowIndex(), ((MazeState) solutionPath.get(i)).getCurrentPosition().getColumnIndex(), 2);
             }
         }
         mazeDisplayer.setDimentions(maze);
-        mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex());
-        mazeDisplayer.redraw(character, wall, endPoint, solve);
+        mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+        mazeDisplayer.redraw(character, wall, endPoint, solve, floor);
     }
 
 }
