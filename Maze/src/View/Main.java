@@ -13,22 +13,23 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-
+/*
+*/
         primaryStage.setTitle("MazeGame");
         Parent root = FXMLLoader.load(getClass().getResource("StartPage.fxml"));
 
-        StackPane pane = new StackPane();
-        Scene scene = new Scene(pane,950,680);
+        //StackPane pane = new StackPane();
+        Scene scene = new Scene(root,950,680);
 
 
-        pane.getChildren().add(root);
-        pane.setStyle("-fx-border-color: black;");
+        //pane.getChildren().add(root);
+        //pane.setStyle("-fx-border-color: black;");
 
         
         //root.prefHeightProperty().bind(pane.heightProperty());
         //root.prefWidthProperty().bind(scene.widthProperty());
 
-        scene.getStylesheets().add(getClass().getResource("MainStyle.css").toExternalForm());
+        //scene.getStylesheets().add(getClass().getResource("MainStyle.css").toExternalForm());
 
 
         primaryStage.setScene(scene);

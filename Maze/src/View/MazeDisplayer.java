@@ -20,19 +20,76 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
-/**
- * Created by Aviadjo on 3/9/2017.
- */
 public class MazeDisplayer extends Canvas {
 
     double characterPositionColumn;
     double characterPositionRow;
     int zoom = 10;
-    //Position start;
-    //Position end;
+    Character character;
+    Wall wall;
+    Floor floor;
+    Solve solve;
+    EndPoint endPoint;
+    Outside outside;
 
-    //private int[][] maze;
     private Maze maze;
+
+
+    @Override
+    public double minHeight(double width)
+    {
+        return 50;
+    }
+
+    @Override
+    public double maxHeight(double width)
+    {
+        return 2000;
+    }
+
+    @Override
+    public double prefHeight(double width)
+    {
+        return 1200;
+    }
+
+    @Override
+    public double prefWidth(double height) {
+        return 1000;
+    }
+    @Override
+    public double minWidth(double height)
+    {
+        return 50;
+    }
+
+    @Override
+    public double maxWidth(double height)
+    {
+        return 2000;
+    }
+
+    @Override
+    public boolean isResizable()
+    {
+        return true;
+    }
+
+    @Override
+    public void resize(double width, double height)
+    {
+        if(width > height){
+            super.setWidth(height);
+            super.setHeight(height);
+        }
+        else{
+            super.setWidth(width);
+            super.setHeight(width);
+        }
+        //super.setWidth(width);
+        //super.setHeight(height);
+        redraw();
+    }
 
     public int getZoom(){
         return zoom;
@@ -52,6 +109,14 @@ public class MazeDisplayer extends Canvas {
         }
     }
 
+    public void setImageProperties(Character myChar, Wall myWall, EndPoint myEndPoint, Solve mySolve,Floor myFloor,Outside myOutside){
+        character = myChar;
+        wall = myWall;
+        endPoint = myEndPoint;
+        solve = mySolve;
+        floor = myFloor;
+        outside = myOutside;
+    }
 
     public void updatePlayerSpot(double positionRow,double positionColumn){
         characterPositionRow = positionRow;
@@ -64,25 +129,18 @@ public class MazeDisplayer extends Canvas {
         characterPositionRow = maze.getStartPosition().getRowIndex();
     }
 
-    public void redraw(Character myChar, Wall myWall, EndPoint myEndPoint, Solve mySolve,Floor myFloor) {
+    public void redraw() {
         if (maze != null) {
-            double canvasHeight = getHeight();
-            double canvasWidth = getWidth();
+            double canvasHeight = getWidth();
+            double canvasWidth = getHeight();
             double cellHeight = canvasHeight / (2 * zoom + 1);
             double cellWidth = canvasWidth / (2 * zoom + 1);
 
 
             try {
-                //Image wallImage = new Image("BlueWall.jpg");
-                //Image characterImage = new Image("Pacman.png");
-                Image wallImage = myWall.GetWall();
-                Image solutionImage = mySolve.GetSolve();
-                Image EndPointImage = myEndPoint.GetPoint();
-                Image characterImage = myChar.GetChar();
-                Image floorImage = myFloor.GetFloor();
                 GraphicsContext gc = getGraphicsContext2D();
                 gc.clearRect(0, 0, getWidth(), getHeight());
-                gc.setFill(Color.BLACK);
+                gc.setFill(Color.BLUE);
 
                 double printx = 0;//i
                 double printy = 0;//j
@@ -91,17 +149,21 @@ public class MazeDisplayer extends Canvas {
                     for (int j = (int) characterPositionColumn - zoom; j <= (int) characterPositionColumn + zoom; j++) {
                         if (i < 0 || j < 0 || i >= maze.getNumOfRows() || j >= maze.getNumOfColumns()) {
                             gc.fillRect(printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                            gc.drawImage(outside.GetOutside(), printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                         } else if (maze.getMazeInfo(i,j) == 1) {
-                            gc.fillRect(printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
-                            gc.drawImage(wallImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
-                        } else if(i == maze.getGoalPosition().getRowIndex() && j == maze.getGoalPosition().getColumnIndex()){
-                            gc.drawImage(EndPointImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                            gc.drawImage(floor.GetFloor(), printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                            gc.drawImage(wall.GetWall(), printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                        } else  if(i == maze.getGoalPosition().getRowIndex() && j == maze.getGoalPosition().getColumnIndex()){
+                            gc.drawImage(floor.GetFloor(), printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                            gc.drawImage(endPoint.GetPoint(), printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                         } else if (maze.getMazeInfo(i,j) == 0) {
-                            gc.drawImage(floorImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                            gc.drawImage(floor.GetFloor(), printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                         } else if (maze.getMazeInfo(i,j) == 5) {
-                            gc.drawImage(characterImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                            gc.drawImage(floor.GetFloor(), printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                            gc.drawImage(character.GetChar(), printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                         } else if(maze.getMazeInfo(i,j) == 2){
-                            gc.drawImage(solutionImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                            gc.drawImage(floor.GetFloor(), printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                            gc.drawImage(solve.GetSolve(), printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                         }
                         printy++;
                     }

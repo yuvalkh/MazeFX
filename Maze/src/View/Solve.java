@@ -15,7 +15,6 @@ public class Solve {
     }
 
     public Image GetSolve() {
-        /********************** NOT FINISHED **************************/
         return this.image;
     }
 }
