@@ -54,7 +54,7 @@
                         <Insets bottom="40.0" />
                      </HBox.margin>
                           </Button>
-                          <Button fx:id="ExitButton" defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Exit" HBox.hgrow="ALWAYS">
+                          <Button fx:id="ExitButton" defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#ExitGame" text="Exit" HBox.hgrow="ALWAYS">
                               <font>
                                   <Font name="Bauhaus 93" size="15.0" />
                               </font>
