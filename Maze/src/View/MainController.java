@@ -29,7 +29,7 @@ public class MainController {
     public void openMazeWindow() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("GamePage.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 900, 900);
+        Scene scene = new Scene(fxmlLoader.load(), 1200, 900);
         Stage stage = new Stage();
         stage = new Stage();
         stage.setTitle("TheMaze");

@@ -6,6 +6,7 @@ import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.*;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -35,6 +38,7 @@ public class GamePageController {
     public MazeDisplayer mazeDisplayer;//the canvas
     public Button BackButton;
 
+    int SelectedCharacter;
     SearchableMaze solveMaze;
     Solution solutionMaze;
     Position PlayerSpot;
@@ -52,7 +56,7 @@ public class GamePageController {
     public void backToMenu() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("StartPage.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 950,680);
+        Scene scene = new Scene(fxmlLoader.load(), 950, 680);
         Stage stage = new Stage();
         stage.setTitle("MainMenu");
         stage.setScene(scene);
@@ -60,6 +64,7 @@ public class GamePageController {
         Stage mazeStage = (Stage) BackButton.getScene().getWindow();
         mazeStage.close();
     }
+
     public void handleKeyPressed(KeyEvent ke) throws IOException {
         if (ke.getCode() == KeyCode.CONTROL) {
             isControlPressed = true;
@@ -123,11 +128,13 @@ public class GamePageController {
             endGame();
         }
     }
+
     public void handleKeyReleased(KeyEvent ke) {
         if (ke.getCode() == KeyCode.CONTROL) {
             isControlPressed = false;
         }
     }
+
     public void loadGame(String GameName) throws IOException, ClassNotFoundException {
         FileInputStream fi = new FileInputStream(new File(getClass().getResource("/SavedGames").getPath() + "/" + GameName));
         ObjectInputStream oi = new ObjectInputStream(fi);
@@ -139,7 +146,7 @@ public class GamePageController {
         Position loadedPosition = (Position) oi.readObject();
         int zoom = oi.read();
         showSolution = false;
-        String characterName = (String)oi.readObject();
+        String characterName = (String) oi.readObject();
         oi.close();
         fi.close();
         List<Image> Up = new LinkedList<>();
@@ -154,9 +161,9 @@ public class GamePageController {
         Down.add(new Image("/Images/" + characterName + "/Down1.png"));
         Left.add(new Image("/Images/" + characterName + "/Left0.png"));
         Left.add(new Image("/Images/" + characterName + "/Left1.png"));
-        character = new Character(characterName,Up,Down,Right,Left);
+        character = new Character(characterName, Up, Down, Right, Left);
         maze = new Maze(bytedLoadedMaze);
-        maze.setMazeInfo(loadedPosition.getRowIndex(), loadedPosition.getColumnIndex(),5);
+        maze.setMazeInfo(loadedPosition.getRowIndex(), loadedPosition.getColumnIndex(), 5);
         PlayerSpot = loadedPosition;
         mazeDisplayer.setDimentions(maze);
         mazeDisplayer.updatePlayerSpot(loadedPosition.getRowIndex(), loadedPosition.getColumnIndex());
@@ -167,6 +174,7 @@ public class GamePageController {
         mazeDisplayer.redraw();
         //now we can set all the properties
     }
+
     public void zoom(ScrollEvent se) {
         if (isControlPressed) {
             if (se.getDeltaY() > 0) {
@@ -177,11 +185,12 @@ public class GamePageController {
             mazeDisplayer.redraw();
         }
     }
+
     public void generateMaze() {
-        int[] RowsAndCols = new int[2];
+        int[] RowsAndCols;
         RowsAndCols = getDimensionsFromDialog();
 
-        if (RowsAndCols[0] > 0 && RowsAndCols[1] > 0) {
+        if (RowsAndCols[0] > 0 && RowsAndCols[1] > 0 && SelectedCharacter > 0) {
             IMazeGenerator mazeGenerator = new MyMazeGenerator();
             Maze GeneratedMaze = mazeGenerator.generate(RowsAndCols[0], RowsAndCols[1]);
             maze = GeneratedMaze;
@@ -193,90 +202,108 @@ public class GamePageController {
             List<Image> Right = new LinkedList<>();
             List<Image> Down = new LinkedList<>();
             List<Image> Left = new LinkedList<>();
-            Up.add(new Image("/Images/Pikachu/Up0.png"));
-            Up.add(new Image("/Images/Pikachu/Up1.png"));
-            Right.add(new Image("/Images/Pikachu/Right0.png"));
-            Right.add(new Image("/Images/Pikachu/Right1.png"));
-            Down.add(new Image("/Images/Pikachu/Down0.png"));
-            Down.add(new Image("/Images/Pikachu/Down1.png"));
-            Left.add(new Image("/Images/Pikachu/Left0.png"));
-            Left.add(new Image("/Images/Pikachu/Left1.png"));
-            character = new Character("Pikachu",Up,Down,Right,Left);
+            if(SelectedCharacter == 1){
+                Up.add(new Image("/Images/Pikachu/Up0.png"));
+                Up.add(new Image("/Images/Pikachu/Up1.png"));
+                Right.add(new Image("/Images/Pikachu/Right0.png"));
+                Right.add(new Image("/Images/Pikachu/Right1.png"));
+                Down.add(new Image("/Images/Pikachu/Down0.png"));
+                Down.add(new Image("/Images/Pikachu/Down1.png"));
+                Left.add(new Image("/Images/Pikachu/Left0.png"));
+                Left.add(new Image("/Images/Pikachu/Left1.png"));
+                character = new Character("Pikachu", Up, Down, Right, Left);
+            } else if(SelectedCharacter == 2){
+                Up.add(new Image("/Images/Squirtel/Up0.png"));
+                Up.add(new Image("/Images/Squirtel/Up1.png"));
+                Right.add(new Image("/Images/Squirtel/Right0.png"));
+                Right.add(new Image("/Images/Squirtel/Right1.png"));
+                Down.add(new Image("/Images/Squirtel/Down0.png"));
+                Down.add(new Image("/Images/Squirtel/Down1.png"));
+                Left.add(new Image("/Images/Squirtel/Left0.png"));
+                Left.add(new Image("/Images/Squirtel/Left1.png"));
+                character = new Character("Squirtel", Up, Down, Right, Left);
+            } else if(SelectedCharacter == 3){
+                Up.add(new Image("/Images/Torchic/Up0.png"));
+                Up.add(new Image("/Images/Torchic/Up1.png"));
+                Right.add(new Image("/Images/Torchic/Right0.png"));
+                Right.add(new Image("/Images/Torchic/Right1.png"));
+                Down.add(new Image("/Images/Torchic/Down0.png"));
+                Down.add(new Image("/Images/Torchic/Down1.png"));
+                Left.add(new Image("/Images/Torchic/Left0.png"));
+                Left.add(new Image("/Images/Torchic/Left1.png"));
+                character = new Character("Torchic", Up, Down, Right, Left);
+            } else if(SelectedCharacter == 4){
+                Up.add(new Image("/Images/Treeco/Up0.png"));
+                Up.add(new Image("/Images/Treeco/Up1.png"));
+                Right.add(new Image("/Images/Treeco/Right0.png"));
+                Right.add(new Image("/Images/Treeco/Right1.png"));
+                Down.add(new Image("/Images/Treeco/Down0.png"));
+                Down.add(new Image("/Images/Treeco/Down1.png"));
+                Left.add(new Image("/Images/Treeco/Left0.png"));
+                Left.add(new Image("/Images/Treeco/Left1.png"));
+                character = new Character("Treeco", Up, Down, Right, Left);
+            } else {
+                showAlert("You didn't choose a character","aww man");
+            }
             mazeDisplayer.setImageProperties(character, wall, endPoint, solve, floor, outside);
             mazeDisplayer.setCharacterImage(character.getRightImage());
             mazeDisplayer.redraw();
 
         }
     }
+
     public void solveMaze(ActionEvent actionEvent) {
-        if(!showSolution) {
-            BestFirstSearch bfs = new BestFirstSearch();
-            solveMaze.setStartPosition(PlayerSpot);
-            solutionMaze = bfs.solve(solveMaze);
-            ArrayList<AState> solutionPath = solutionMaze.getSolutionPath();
-            int i;
-            for (i = 0; i < solutionPath.size(); ++i) {
-                if (maze.getMazeInfo(((MazeState) solutionPath.get(i)).getCurrentPosition().getRowIndex(), ((MazeState) solutionPath.get(i)).getCurrentPosition().getColumnIndex()) == 0) {
-                    maze.setMazeInfo(((MazeState) solutionPath.get(i)).getCurrentPosition().getRowIndex(), ((MazeState) solutionPath.get(i)).getCurrentPosition().getColumnIndex(), 2);
+        if (solveMaze != null) {
+            if (!showSolution) {
+                BestFirstSearch bfs = new BestFirstSearch();
+                solveMaze.setStartPosition(PlayerSpot);
+                solutionMaze = bfs.solve(solveMaze);
+                ArrayList<AState> solutionPath = solutionMaze.getSolutionPath();
+                int i;
+                for (i = 0; i < solutionPath.size(); ++i) {
+                    if (maze.getMazeInfo(((MazeState) solutionPath.get(i)).getCurrentPosition().getRowIndex(), ((MazeState) solutionPath.get(i)).getCurrentPosition().getColumnIndex()) == 0) {
+                        maze.setMazeInfo(((MazeState) solutionPath.get(i)).getCurrentPosition().getRowIndex(), ((MazeState) solutionPath.get(i)).getCurrentPosition().getColumnIndex(), 2);
+                    }
                 }
+                showSolution = true;
+            } else {
+                for (int j = 0; j < maze.getNumOfRows(); j++) {
+                    for (int k = 0; k < maze.getNumOfColumns(); k++) {
+                        if (maze.getMazeInfo(j, k) == 2) {
+                            maze.setMazeInfo(j, k, 0);
+                        }
+                    }
+                }
+                showSolution = false;
             }
-            showSolution = true;
-        } else{
-            for (int j = 0; j < maze.getNumOfRows(); j++) {
-                for (int k = 0; k < maze.getNumOfColumns(); k++) {
-                    if (maze.getMazeInfo(j, k) == 2) {
-                        maze.setMazeInfo(j, k, 0);
+            mazeDisplayer.setDimentions(maze);
+            mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+            mazeDisplayer.redraw();
+        } else {
+            showAlert("In order to solve a maze you need to have a maze", "Maze Not Found");
+        }
+    }
+
+    public void saveGame() throws IOException, URISyntaxException {
+        if (maze != null) {
+            TextInputDialog dialog = new TextInputDialog();
+            Maze savingMaze = new Maze(maze);
+            dialog.setTitle("Saving Maze");
+            String[] saveName = new String[1];
+            dialog.setHeaderText("Enter the name of your save file:");
+            Optional<String> result = dialog.showAndWait();
+            result.ifPresent(name -> {
+                saveName[0] = name;
+            });
+            for (int i = 0; i < maze.getNumOfRows(); i++) {
+                for (int j = 0; j < maze.getNumOfColumns(); j++) {
+                    if (savingMaze.getMazeInfo(i, j) != 1) {
+                        savingMaze.setMazeInfo(i, j, 0);
                     }
                 }
             }
-            showSolution = false;
-        }
-        mazeDisplayer.setDimentions(maze);
-        mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
-        mazeDisplayer.redraw();
-    }
-    public void saveGame() throws IOException, URISyntaxException {
-        TextInputDialog dialog = new TextInputDialog();
-        Maze savingMaze = new Maze(maze);
-        dialog.setTitle("Saving Maze");
-        String[] saveName = new String[1];
-        dialog.setHeaderText("Enter the name of your save file:");
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(name -> {
-            saveName[0] = name;
-        });
-        for (int i = 0; i < maze.getNumOfRows(); i++) {
-            for (int j = 0; j < maze.getNumOfColumns(); j++) {
-                if(savingMaze.getMazeInfo(i,j) != 1){
-                    savingMaze.setMazeInfo(i,j,0);
-                }
-            }
-        }
-        if (!saveName[0].equals("")) {
-            if (!SaveFileExist(saveName[0])) {
-                FileOutputStream f = new FileOutputStream(new File(getClass().getResource("/SavedGames").getPath() + "/" + saveName[0]));
-                ObjectOutputStream o = new ObjectOutputStream(f);
-                String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
-                //write the maze,player's spot, Current zoom
-                o.writeObject(timeStamp);
-                o.write(maze.getNumOfRows());
-                o.write(maze.getNumOfColumns());
-                //o.writeObject(maze.toByteArray());
-                o.writeObject(savingMaze.toByteArray());
-                o.writeObject(PlayerSpot);
-                o.write(mazeDisplayer.getZoom());
-                o.writeObject(character.getName());
-                o.close();
-                f.close();
-                showAlert("Game has been saved successfully !", "SaveGame");
-            } else {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Dialog");
-                alert.setHeaderText("It seems like there is already a save file called like this");
-                alert.setContentText("Do you wish to overwrite it?");
-
-                Optional<ButtonType> result2 = alert.showAndWait();
-                if (result2.get() == ButtonType.OK) {
+            if (!saveName[0].equals("")) {
+                if (!SaveFileExist(saveName[0])) {
                     FileOutputStream f = new FileOutputStream(new File(getClass().getResource("/SavedGames").getPath() + "/" + saveName[0]));
                     ObjectOutputStream o = new ObjectOutputStream(f);
                     String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
@@ -288,15 +315,41 @@ public class GamePageController {
                     o.writeObject(savingMaze.toByteArray());
                     o.writeObject(PlayerSpot);
                     o.write(mazeDisplayer.getZoom());
-                    o.writeObject(saveName[0]);
                     o.writeObject(character.getName());
                     o.close();
                     f.close();
                     showAlert("Game has been saved successfully !", "SaveGame");
                 } else {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation Dialog");
+                    alert.setHeaderText("It seems like there is already a save file called like this");
+                    alert.setContentText("Do you wish to overwrite it?");
 
+                    Optional<ButtonType> result2 = alert.showAndWait();
+                    if (result2.get() == ButtonType.OK) {
+                        FileOutputStream f = new FileOutputStream(new File(getClass().getResource("/SavedGames").getPath() + "/" + saveName[0]));
+                        ObjectOutputStream o = new ObjectOutputStream(f);
+                        String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
+                        //write the maze,player's spot, Current zoom
+                        o.writeObject(timeStamp);
+                        o.write(maze.getNumOfRows());
+                        o.write(maze.getNumOfColumns());
+                        //o.writeObject(maze.toByteArray());
+                        o.writeObject(savingMaze.toByteArray());
+                        o.writeObject(PlayerSpot);
+                        o.write(mazeDisplayer.getZoom());
+                        o.writeObject(saveName[0]);
+                        o.writeObject(character.getName());
+                        o.close();
+                        f.close();
+                        showAlert("Game has been saved successfully !", "SaveGame");
+                    } else {
+
+                    }
                 }
             }
+        } else {
+            showAlert("In order to save a maze you need to have a maze", "Maze Not Found");
         }
     }
 
@@ -309,6 +362,7 @@ public class GamePageController {
         }
         return false;
     }
+
     public void openChoosingLoadedGame() throws IOException, ClassNotFoundException {
         Scene scene = new Scene(new Group());
         Stage stage = new Stage();
@@ -396,7 +450,7 @@ public class GamePageController {
         VBox.setVgrow(table, Priority.ALWAYS);
         vbox.setAlignment(Pos.CENTER);
         hbox.getChildren().addAll(LoadButton, ExitButton);
-        vbox.getChildren().addAll(label, table,sp);
+        vbox.getChildren().addAll(label, table, sp);
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
         //table.prefWidthProperty().bind(stage.widthProperty());
         //table.prefHeightProperty().bind(vbox.heightProperty());
@@ -406,8 +460,11 @@ public class GamePageController {
         vbox.prefWidthProperty().bind(scene.widthProperty());
         stage.setTitle("Choose loaded game");
         stage.setScene(scene);
+        stage.setHeight(600);
+        stage.setWidth(400);
         stage.show();
     }
+
     private int[] getDimensionsFromDialog() {
         final int[] RowsAndCols = new int[2];
         final boolean[] clickedCancel = new boolean[1];
@@ -429,22 +486,63 @@ public class GamePageController {
             gridPane.add(new Label("Number of columns:"), 0, 1);
             gridPane.add(to, 1, 1);
             gridPane.add(new Label("Pick your character:"), 0, 2);
-            ImageView firstCharacter = new ImageView("/Images/PacmanUp.png");
-            firstCharacter.setFitHeight(100);
-            firstCharacter.setFitWidth(100);
+
+            ImageView firstCharacter = new ImageView("/Images/Pikachu/Down0.png");
+            firstCharacter.setFitHeight(50);
+            firstCharacter.setFitWidth(50);
             gridPane.add(firstCharacter, 0, 3);
-            ImageView secondCharacter = new ImageView("/Images/PacmanDown.png");
-            secondCharacter.setFitHeight(100);
-            secondCharacter.setFitWidth(100);
+            ImageView secondCharacter = new ImageView("/Images/Squirtel/Down0.png");
+            secondCharacter.setFitHeight(50);
+            secondCharacter.setFitWidth(50);
             gridPane.add(secondCharacter, 1, 3);
-            ImageView thirdCharacter = new ImageView("/Images/PacmanRight.png");
-            thirdCharacter.setFitHeight(100);
-            thirdCharacter.setFitWidth(100);
+            ImageView thirdCharacter = new ImageView("/Images/Torchic/Down0.png");
+            thirdCharacter.setFitHeight(50);
+            thirdCharacter.setFitWidth(50);
             gridPane.add(thirdCharacter, 0, 4);
-            ImageView fourthCharacter = new ImageView("/Images/PacmanLeft.png");
-            fourthCharacter.setFitHeight(100);
-            fourthCharacter.setFitWidth(100);
+            ImageView fourthCharacter = new ImageView("/Images/Treeco/Down0.png");
+            fourthCharacter.setFitHeight(50);
+            fourthCharacter.setFitWidth(50);
             gridPane.add(fourthCharacter, 1, 4);
+
+            gridPane.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent arg0) {
+                    Node source = arg0.getPickResult().getIntersectedNode();
+                    Integer colIndex = gridPane.getColumnIndex(source);
+                    Integer rowIndex = gridPane.getRowIndex(source);
+                    Node result = null;
+                    ObservableList<Node> children = gridPane.getChildren();
+                    ImageView tempImage = null;
+                    Pane tempStackPane = null;
+                    for (Node node : children) {
+                        if(gridPane.getRowIndex(node) == rowIndex && gridPane.getColumnIndex(node) == colIndex) {
+                            if(rowIndex == 3 && colIndex == 0){
+                                tempImage = new ImageView("/Images/Pikachu/Down0.png");
+                                SelectedCharacter = 1;
+                                showAlert("You choosed Pikachu","Hey");
+                            }
+                            if(rowIndex == 3 && colIndex == 1){
+                                tempImage = new ImageView("/Images/Squirtel/Down0.png");
+                                SelectedCharacter = 2;
+                                showAlert("You choosed Squirtel","Hey");
+                            }
+                            if(rowIndex == 4 && colIndex == 0){
+                                tempImage = new ImageView("/Images/Torchic/Down0.png");
+                                SelectedCharacter = 3;
+                                showAlert("You choosed Torchic","Hey");
+                            }
+                            if(rowIndex == 4 && colIndex == 1){
+                                tempImage = new ImageView("/Images/Treeco/Down0.png");
+                                SelectedCharacter = 4;
+                                showAlert("You choosed Treeco","Hey");
+                            }
+                        }
+                        else{
+
+                        }
+                    }
+                 }
+            });
             dialog.getDialogPane().setContent(gridPane);
 
             Platform.runLater(() -> from.requestFocus());
@@ -474,12 +572,14 @@ public class GamePageController {
         while ((RowsAndCols[0] <= 0 || RowsAndCols[1] <= 0) && !clickedCancel[0]);
         return new int[]{RowsAndCols[0], RowsAndCols[1]};
     }
+
     private void showAlert(String alertMessage, String title) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(alertMessage);
         alert.setTitle(title);
         alert.show();
     }
+
     public void endGame() throws IOException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText("You have finished the game !\n you will now be sent to Main Menu screen");
