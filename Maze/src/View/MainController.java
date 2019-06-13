@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+
 import java.io.*;
 
 public class MainController {
@@ -13,6 +14,7 @@ public class MainController {
     public javafx.scene.control.Button StartGame;
     public javafx.scene.control.Button HelpButton;
     public javafx.scene.control.Button AboutButton;
+    public javafx.scene.control.Button ExitButton;
 
     public void openTestWindow() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -37,6 +39,13 @@ public class MainController {
         stage.show();
         Stage oldStage = (Stage) StartGame.getScene().getWindow();
         oldStage.close();
+    }
+    @FXML
+    private void ExitGame(){
+        Stage stage = (Stage) ExitButton.getScene().getWindow();
+        stage.close();
+
+
     }
 
     private void showAlert(String alertMessage, String title) {
