@@ -10,9 +10,9 @@
 <?import javafx.scene.text.Font?>
 
 
-<StackPane prefHeight="709.0" prefWidth="1238.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainController" stylesheets="@MainStyle.css">
+<StackPane prefHeight="709.0" prefWidth="1238.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="View.MainController" stylesheets="@MainStyle.css">
    <children>
-      <VBox fx:id="MyViewVBox" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="495.0" prefWidth="862.0">
+      <VBox stylesheets="@MainStyle.css" fx:id="MyViewVBox" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="495.0" prefWidth="862.0">
           <children>
                     <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="66.0" prefWidth="534.0" text="Pokemon Maze Game" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                         <font>

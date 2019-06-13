@@ -11,7 +11,7 @@ Button {
     -fx-font-size: 20px;
     -fx-pref-height: 50;
     -fx-pref-width: 70;
-    -fx-background-color: Yellow;
+    -fx-background-color: Orange;
     -fx-background-radius: 10;
     -fx-background-size: 50%;
 }

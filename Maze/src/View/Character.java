@@ -2,10 +2,12 @@ package View;
 
 import javafx.scene.image.Image;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Character {
+public class Character implements Serializable {
 
+    private String name;
     private List<Image> GoingUP;
     private int UpCounter = 0;
     private List<Image> GoingDown;
@@ -15,8 +17,16 @@ public class Character {
     private List<Image> GoingLeft;
     private int LeftCounter = 0;
 
+    public String getName() {
+        return name;
+    }
 
-    public Character(List<Image> Up, List<Image> Down, List<Image> Right, List<Image> Left) {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Character(String name,List<Image> Up, List<Image> Down, List<Image> Right, List<Image> Left) {
+        this.name = name;
         this.GoingUP = Up;
         this.GoingDown = Down;
         this.GoingRight = Right;

@@ -26,6 +26,7 @@ public class MazeDisplayer extends Canvas {
     double characterPositionRow;
     int zoom = 10;
     Character character;
+    Image characterImage;
     Wall wall;
     Floor floor;
     Solve solve;
@@ -34,6 +35,9 @@ public class MazeDisplayer extends Canvas {
 
     private Maze maze;
 
+    public void setCharacterImage(Image characterr){
+        characterImage = characterr;
+    }
 
     @Override
     public double minHeight(double width)
@@ -160,7 +164,7 @@ public class MazeDisplayer extends Canvas {
                             gc.drawImage(floor.GetFloor(), printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                         } else if (maze.getMazeInfo(i,j) == 5) {
                             gc.drawImage(floor.GetFloor(), printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
-                            gc.drawImage(character.GetChar(), printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
+                            gc.drawImage(characterImage, printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                         } else if(maze.getMazeInfo(i,j) == 2){
                             gc.drawImage(floor.GetFloor(), printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
                             gc.drawImage(solve.GetSolve(), printy * cellHeight, printx * cellWidth, cellHeight, cellWidth);
