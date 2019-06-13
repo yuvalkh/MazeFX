@@ -48,11 +48,11 @@ public class MainController {
     Position PlayerSpot;
     //int[][] maze;
     Maze maze;
-    Character character = new Character(new Image("/Images/pikachuRun.gif"));
+    Character character = new Character(new Image("/Images/PacmanUp.png"));
     EndPoint endPoint = new EndPoint(new Image("/Images/EndPoint.png"));
-    Solve solve = new Solve(new Image("/Images/Food.jpg"));
-    Wall wall = new Wall(new Image("/Images/BlueWall.jpg"));
-    Floor floor = new Floor(new Image("/Images/Floor.png"));
+    Solve solve = new Solve(new Image("/Images/Food.png"));
+    Wall wall = new Wall(new Image("/Images/BlueWall.png"));
+    Floor floor = new Floor(new Image("/Images/Floor.jpeg"));
     boolean isControlPressed;
 
     public void handleKeyReleased(KeyEvent ke) {

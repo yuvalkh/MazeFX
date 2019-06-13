@@ -1,21 +1,79 @@
 package View;
+
 import javafx.scene.image.Image;
 
+import java.util.List;
+
 public class Character {
-    private Image image;
+
+    private List<Image> GoingUP;
+    private int UpCounter = 0;
+    private List<Image> GoingDown;
+    private int DownCounter = 0;
+    private List<Image> GoingRight;
+    private int RightCounter = 0;
+    private List<Image> GoingLeft;
+    private int LeftCounter = 0;
 
 
-    public Character(Image Char) {
-        this.image = Char;
+    public Character(List<Image> Up, List<Image> Down, List<Image> Right, List<Image> Left) {
+        this.GoingUP = Up;
+        this.GoingDown = Down;
+        this.GoingRight = Right;
+        this.GoingLeft = Left;
+
     }
 
-    public Character(Character Char) {
-        this.image = Char.image;
+    public Image getUpImage() {
+        if (UpCounter >= GoingUP.size()) {
+            UpCounter = 0;
+        }
+        if (GoingUP != null) {
+            Image image = GoingUP.get(UpCounter);
+            UpCounter++;
+            return image;
+        }
+        System.out.println("That ImageList(GoingUP) is Empty or Nullified");
+        return null;
     }
 
-    public Image GetChar() {
-        /********************** NOT FINISHED **************************/
-        return this.image;
+    public Image getDownImage() {
+        if (DownCounter >= GoingDown.size()) {
+            DownCounter = 0;
+        }
+        if (GoingDown != null) {
+            Image image = GoingDown.get(DownCounter);
+            DownCounter++;
+            return image;
+        }
+        System.out.println("That ImageList(GoingDown) is Empty or Nullified");
+        return null;
+    }
+
+    public Image getRightImage() {
+        if (RightCounter >= GoingRight.size()) {
+            RightCounter = 0;
+        }
+        if (GoingRight!= null) {
+            Image image = GoingRight.get(RightCounter);
+            RightCounter++;
+            return image;
+        }
+        System.out.println("That ImageList(GoingRight) is Empty or Nullified");
+        return null;
+    }
+
+    public Image getLeftImage() {
+        if (LeftCounter >= GoingLeft.size()) {
+            LeftCounter = 0;
+        }
+        if (GoingLeft!= null) {
+            Image image = GoingLeft.get(LeftCounter);
+            LeftCounter++;
+            return image;
+        }
+        System.out.println("That ImageList(GoingLeft) is Empty or Nullified");
+        return null;
     }
 
 }
