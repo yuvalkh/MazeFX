@@ -1,0 +1,9 @@
+.imageView {
+    -fx-border-image-width: 0px;
+    -fx-border-color:RED;
+}
+
+.imageView:hover {
+    -fx-border-image-width: 2px;
+    -fx-border-color:RED;
+}

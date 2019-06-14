@@ -25,6 +25,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -52,6 +53,7 @@ public class GamePageController {
     Outside outside = new Outside(new Image("/Images/Water.png"));
     boolean isControlPressed;
     boolean showSolution = false;
+
 
     public void backToMenu() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -202,7 +204,7 @@ public class GamePageController {
             List<Image> Right = new LinkedList<>();
             List<Image> Down = new LinkedList<>();
             List<Image> Left = new LinkedList<>();
-            if(SelectedCharacter == 1){
+            if (SelectedCharacter == 1) {
                 Up.add(new Image("/Images/Pikachu/Up0.png"));
                 Up.add(new Image("/Images/Pikachu/Up1.png"));
                 Right.add(new Image("/Images/Pikachu/Right0.png"));
@@ -212,7 +214,7 @@ public class GamePageController {
                 Left.add(new Image("/Images/Pikachu/Left0.png"));
                 Left.add(new Image("/Images/Pikachu/Left1.png"));
                 character = new Character("Pikachu", Up, Down, Right, Left);
-            } else if(SelectedCharacter == 2){
+            } else if (SelectedCharacter == 2) {
                 Up.add(new Image("/Images/Squirtel/Up0.png"));
                 Up.add(new Image("/Images/Squirtel/Up1.png"));
                 Right.add(new Image("/Images/Squirtel/Right0.png"));
@@ -222,7 +224,7 @@ public class GamePageController {
                 Left.add(new Image("/Images/Squirtel/Left0.png"));
                 Left.add(new Image("/Images/Squirtel/Left1.png"));
                 character = new Character("Squirtel", Up, Down, Right, Left);
-            } else if(SelectedCharacter == 3){
+            } else if (SelectedCharacter == 3) {
                 Up.add(new Image("/Images/Torchic/Up0.png"));
                 Up.add(new Image("/Images/Torchic/Up1.png"));
                 Right.add(new Image("/Images/Torchic/Right0.png"));
@@ -232,7 +234,7 @@ public class GamePageController {
                 Left.add(new Image("/Images/Torchic/Left0.png"));
                 Left.add(new Image("/Images/Torchic/Left1.png"));
                 character = new Character("Torchic", Up, Down, Right, Left);
-            } else if(SelectedCharacter == 4){
+            } else if (SelectedCharacter == 4) {
                 Up.add(new Image("/Images/Treeco/Up0.png"));
                 Up.add(new Image("/Images/Treeco/Up1.png"));
                 Right.add(new Image("/Images/Treeco/Right0.png"));
@@ -243,12 +245,11 @@ public class GamePageController {
                 Left.add(new Image("/Images/Treeco/Left1.png"));
                 character = new Character("Treeco", Up, Down, Right, Left);
             } else {
-                showAlert("You didn't choose a character","aww man");
+                showAlert("You didn't choose a character", "aww man");
             }
             mazeDisplayer.setImageProperties(character, wall, endPoint, solve, floor, outside);
             mazeDisplayer.setCharacterImage(character.getRightImage());
             mazeDisplayer.redraw();
-
         }
     }
 
@@ -477,7 +478,6 @@ public class GamePageController {
             dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
 
             GridPane gridPane = new GridPane();
-
             TextField from = new TextField("50");
             TextField to = new TextField("50");
 
@@ -488,61 +488,93 @@ public class GamePageController {
             gridPane.add(new Label("Pick your character:"), 0, 2);
 
             ImageView firstCharacter = new ImageView("/Images/Pikachu/Down0.png");
+            StackPane firstPane = new StackPane(firstCharacter);
             firstCharacter.setFitHeight(50);
             firstCharacter.setFitWidth(50);
-            gridPane.add(firstCharacter, 0, 3);
+            gridPane.add(firstPane, 0, 3);
             ImageView secondCharacter = new ImageView("/Images/Squirtel/Down0.png");
+            StackPane secondPane = new StackPane(secondCharacter);
             secondCharacter.setFitHeight(50);
             secondCharacter.setFitWidth(50);
-            gridPane.add(secondCharacter, 1, 3);
+            gridPane.add(secondPane, 1, 3);
             ImageView thirdCharacter = new ImageView("/Images/Torchic/Down0.png");
+            StackPane thirdPane = new StackPane(thirdCharacter);
             thirdCharacter.setFitHeight(50);
             thirdCharacter.setFitWidth(50);
-            gridPane.add(thirdCharacter, 0, 4);
+            gridPane.add(thirdPane, 0, 4);
             ImageView fourthCharacter = new ImageView("/Images/Treeco/Down0.png");
+            StackPane fourthPane = new StackPane(fourthCharacter);
             fourthCharacter.setFitHeight(50);
             fourthCharacter.setFitWidth(50);
-            gridPane.add(fourthCharacter, 1, 4);
+            gridPane.add(fourthPane, 1, 4);
+            firstPane.addEventHandler(MouseEvent.MOUSE_PRESSED,
+                    new EventHandler<MouseEvent>() {
 
-            gridPane.setOnMouseClicked(new EventHandler<MouseEvent>(){
-                @Override
-                public void handle(MouseEvent arg0) {
-                    Node source = arg0.getPickResult().getIntersectedNode();
-                    Integer colIndex = gridPane.getColumnIndex(source);
-                    Integer rowIndex = gridPane.getRowIndex(source);
-                    Node result = null;
-                    ObservableList<Node> children = gridPane.getChildren();
-                    ImageView tempImage = null;
-                    Pane tempStackPane = null;
-                    for (Node node : children) {
-                        if(gridPane.getRowIndex(node) == rowIndex && gridPane.getColumnIndex(node) == colIndex) {
-                            if(rowIndex == 3 && colIndex == 0){
-                                tempImage = new ImageView("/Images/Pikachu/Down0.png");
+                        public void handle(MouseEvent e) {
+                            if (SelectedCharacter != 1) {
+                                firstPane.setBorder(new Border(new BorderStroke(Color.RED,
+                                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                                secondPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                                thirdPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                                fourthPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
                                 SelectedCharacter = 1;
-                                showAlert("You choosed Pikachu","Hey");
-                            }
-                            if(rowIndex == 3 && colIndex == 1){
-                                tempImage = new ImageView("/Images/Squirtel/Down0.png");
-                                SelectedCharacter = 2;
-                                showAlert("You choosed Squirtel","Hey");
-                            }
-                            if(rowIndex == 4 && colIndex == 0){
-                                tempImage = new ImageView("/Images/Torchic/Down0.png");
-                                SelectedCharacter = 3;
-                                showAlert("You choosed Torchic","Hey");
-                            }
-                            if(rowIndex == 4 && colIndex == 1){
-                                tempImage = new ImageView("/Images/Treeco/Down0.png");
-                                SelectedCharacter = 4;
-                                showAlert("You choosed Treeco","Hey");
                             }
                         }
-                        else{
+                    });
+            secondPane.addEventHandler(MouseEvent.MOUSE_PRESSED,
+                    new EventHandler<MouseEvent>() {
 
+                        public void handle(MouseEvent e) {
+                            if (SelectedCharacter != 2) {
+                                secondPane.setBorder(new Border(new BorderStroke(Color.RED,
+                                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                                firstPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                                thirdPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                                fourthPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                                SelectedCharacter = 2;
+                            }
                         }
-                    }
-                 }
-            });
+                    });
+            thirdPane.addEventHandler(MouseEvent.MOUSE_PRESSED,
+                    new EventHandler<MouseEvent>() {
+
+                        public void handle(MouseEvent e) {
+                            if (SelectedCharacter != 3) {
+                                thirdPane.setBorder(new Border(new BorderStroke(Color.RED,
+                                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                                secondPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                                firstPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                                fourthPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                                SelectedCharacter = 3;
+                            }
+                        }
+                    });
+            fourthPane.addEventHandler(MouseEvent.MOUSE_PRESSED,
+                    new EventHandler<MouseEvent>() {
+
+                        public void handle(MouseEvent e) {
+                            if (SelectedCharacter != 4) {
+                                fourthPane.setBorder(new Border(new BorderStroke(Color.RED,
+                                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                                secondPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                                thirdPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                                firstPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                                        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                                SelectedCharacter = 4;
+                            }
+                        }
+                    });
             dialog.getDialogPane().setContent(gridPane);
 
             Platform.runLater(() -> from.requestFocus());
@@ -568,8 +600,15 @@ public class GamePageController {
                     RowsAndCols[1] = -1;
                 }
             });
+            if(SelectedCharacter == 0){
+                showAlert("You need to select a character","Error");
+                clickedCancel[0] = false;
+            }
         }
-        while ((RowsAndCols[0] <= 0 || RowsAndCols[1] <= 0) && !clickedCancel[0]);
+        while ((RowsAndCols[0] <= 0 || RowsAndCols[1] <= 0) && !clickedCancel[0] || SelectedCharacter == 0);
+        if(clickedCancel[0]){
+            SelectedCharacter = 0;
+        }
         return new int[]{RowsAndCols[0], RowsAndCols[1]};
     }
 
@@ -577,7 +616,7 @@ public class GamePageController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(alertMessage);
         alert.setTitle(title);
-        alert.show();
+        alert.showAndWait();
     }
 
     public void endGame() throws IOException {
