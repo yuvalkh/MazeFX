@@ -29,6 +29,17 @@ public class StartPageController {
         stage.show();
     }
 
+    public void openAboutWindow() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("AboutPage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setTitle("Tests");
+        scene.getStylesheets().addAll(this.getClass().getResource("AboutStyle.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void openMazeWindow() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("GamePage.fxml"));

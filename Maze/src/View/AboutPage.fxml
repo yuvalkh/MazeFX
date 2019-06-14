@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="239.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HelpPageController">
+    <children>
+        <Label alignment="TOP_CENTER" text="About the game" VBox.vgrow="ALWAYS">
+            <font>
+                <Font size="23.0" />
+            </font>
+        </Label>
+        <Label alignment="TOP_CENTER" text="In this maze we used Algorithms such as: &#10;BFS/DFS&#10;Depth First Search&#10;Furthermore this is the first version of the game and we hope you like it" VBox.vgrow="ALWAYS">
+            <font>
+                <Font size="17.0" />
+            </font>
+        </Label>
+        <Label alignment="TOP_CENTER" text="About us" VBox.vgrow="ALWAYS">
+            <font>
+                <Font size="21.0" />
+            </font>
+        </Label>
+        <Label alignment="TOP_CENTER" text="We are two students at BGU who are awesome !" VBox.vgrow="ALWAYS">
+            <font>
+                <Font size="17.0" />
+            </font>
+        </Label>
+        <Button fx:id="ExitButton" mnemonicParsing="false" onAction="#handleCancelButton" text="Exit" />
+    </children>
+    <padding>
+        <Insets left="5.0" />
+    </padding>
+</VBox>

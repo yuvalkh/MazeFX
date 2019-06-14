@@ -32,7 +32,7 @@
                         <Insets bottom="40.0" />
                      </HBox.margin>
                           </Button>
-                          <Button fx:id="AboutButton" defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openAbout" text="About" HBox.hgrow="ALWAYS">
+                          <Button fx:id="AboutButton" defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openAboutWindow" text="About" HBox.hgrow="ALWAYS">
                               <font>
                                   <Font name="Bauhaus 93" size="15.0" />
                               </font>

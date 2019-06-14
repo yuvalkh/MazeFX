@@ -1,23 +1,5 @@
 .root{
-    -fx-background-color: rgba(68, 77, 241, 0.87);
-
-}
-Label{
-    -fx-text-fill: Black;
-    -fx-font-size: 20px;
-    -fx-pref-width: 300px;
-    -fx-pref-height: 30px;
-}
-
-.combo-box-base {
-    -fx-pref-width: 50px;
-}
-
-TextField{
-    -fx-text-fill: Black;
-    -fx-font-size: 15px;
-    -fx-pref-width: 30px;
-    -fx-pref-height: 20px;
+    -fx-background-color: rgba(241, 143, 59, 0.87);
 }
 
 Button {
