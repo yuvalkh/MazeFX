@@ -1,16 +1,31 @@
 .root{
-    -fx-background-image: url("/Images/Pik.jpg");
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-    -fx-background-size: 100% 100%;
+    -fx-background-color: rgba(25, 192, 227, 0.61);
+}
+
+.table-row-cell{
+    -fx-background-color: -fx-table-cell-border-color, #55804e;
+    -fx-font-size: 20px;
+}
+
+.table-view .column-header {
+    -fx-background-color: #438041;
+}
+
+.table-row-cell:odd{
+    -fx-background-color: -fx-table-cell-border-color, #588052;
+    -fx-font-size: 20px;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #14807d;
 }
 
 Button {
     -fx-text-fill: Black;
     -fx-font-family: "Bauhaus 93";
     -fx-font-size: 20px;
-    -fx-pref-height: 50;
-    -fx-pref-width: 70;
+    -fx-pref-height: 20;
+    -fx-pref-width: 90;
     -fx-background-color: Orange;
     -fx-background-radius: 10;
     -fx-background-size: 50%;
@@ -18,9 +33,7 @@ Button {
 
 Button:hover{
     -fx-text-fill: Black;
-    -fx-font-size: 25px;
+    -fx-font-size: 20px;
     -fx-font-family: "Bauhaus 93";
-    -fx-pref-height: 50;
-    -fx-pref-width: 90;
     -fx-background-color: LightYellow;
 }

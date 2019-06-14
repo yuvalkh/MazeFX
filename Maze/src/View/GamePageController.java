@@ -68,66 +68,68 @@ public class GamePageController {
     }
 
     public void handleKeyPressed(KeyEvent ke) throws IOException {
-        if (ke.getCode() == KeyCode.CONTROL) {
-            isControlPressed = true;
-        }
-        if (ke.getCode() == KeyCode.RIGHT) {
-            if (PlayerSpot.getColumnIndex() < maze.getNumOfColumns() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex() + 1) != 1) {
-                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
-                PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() + 1);
-                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
-                mazeDisplayer.setDimentions(maze);
-                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
-                mazeDisplayer.setCharacterImage(character.getRightImage());
-                mazeDisplayer.redraw();
-            } else {
-                //showAlert("You can't walk right anymore","no way");
+        if (maze != null) {//it means the maze is up so you need to listen keys.
+            if (ke.getCode() == KeyCode.CONTROL) {
+                isControlPressed = true;
             }
-        }
-        if (ke.getCode() == KeyCode.DOWN) {
-            if (PlayerSpot.getRowIndex() < maze.getNumOfRows() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex() + 1, PlayerSpot.getColumnIndex()) != 1) {
-                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
-                PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() + 1);
-                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
-                mazeDisplayer.setDimentions(maze);
-                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
-                mazeDisplayer.setCharacterImage(character.getDownImage());
-                mazeDisplayer.redraw();
-            } else {
+            if (ke.getCode() == KeyCode.RIGHT) {
+                if (PlayerSpot.getColumnIndex() < maze.getNumOfColumns() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex() + 1) != 1) {
+                    maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
+                    PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() + 1);
+                    maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
+                    mazeDisplayer.setDimentions(maze);
+                    mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                    mazeDisplayer.setCharacterImage(character.getRightImage());
+                    mazeDisplayer.redraw();
+                } else {
+                    //showAlert("You can't walk right anymore","no way");
+                }
+            }
+            if (ke.getCode() == KeyCode.DOWN) {
+                if (PlayerSpot.getRowIndex() < maze.getNumOfRows() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex() + 1, PlayerSpot.getColumnIndex()) != 1) {
+                    maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
+                    PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() + 1);
+                    maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
+                    mazeDisplayer.setDimentions(maze);
+                    mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                    mazeDisplayer.setCharacterImage(character.getDownImage());
+                    mazeDisplayer.redraw();
+                } else {
 
-                //showAlert("You can't walk down anymore","no way");
+                    //showAlert("You can't walk down anymore","no way");
+                }
             }
-        }
-        if (ke.getCode() == KeyCode.UP) {
-            if (PlayerSpot.getRowIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex() - 1, PlayerSpot.getColumnIndex()) != 1) {
-                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
-                PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() - 1);
-                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
-                mazeDisplayer.setDimentions(maze);
-                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
-                mazeDisplayer.setCharacterImage(character.getUpImage());
-                mazeDisplayer.redraw();
-            } else {
-                //showAlert("You can't walk up anymore","no way");
+            if (ke.getCode() == KeyCode.UP) {
+                if (PlayerSpot.getRowIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex() - 1, PlayerSpot.getColumnIndex()) != 1) {
+                    maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
+                    PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() - 1);
+                    maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
+                    mazeDisplayer.setDimentions(maze);
+                    mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                    mazeDisplayer.setCharacterImage(character.getUpImage());
+                    mazeDisplayer.redraw();
+                } else {
+                    //showAlert("You can't walk up anymore","no way");
 
+                }
             }
-        }
-        if (ke.getCode() == KeyCode.LEFT) {
-            if (PlayerSpot.getColumnIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex() - 1) != 1) {
-                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
-                PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() - 1);
-                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
-                mazeDisplayer.setDimentions(maze);
-                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
-                mazeDisplayer.setCharacterImage(character.getLeftImage());
-                mazeDisplayer.redraw();
-            } else {
+            if (ke.getCode() == KeyCode.LEFT) {
+                if (PlayerSpot.getColumnIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex() - 1) != 1) {
+                    maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
+                    PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() - 1);
+                    maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
+                    mazeDisplayer.setDimentions(maze);
+                    mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                    mazeDisplayer.setCharacterImage(character.getLeftImage());
+                    mazeDisplayer.redraw();
+                } else {
 
-                //showAlert("You can't walk left anymore","no way");
+                    //showAlert("You can't walk left anymore","no way");
+                }
             }
-        }
-        if (PlayerSpot.getColumnIndex() == maze.getGoalPosition().getColumnIndex() && PlayerSpot.getRowIndex() == maze.getGoalPosition().getRowIndex()) {
-            endGame();
+            if (PlayerSpot.getColumnIndex() == maze.getGoalPosition().getColumnIndex() && PlayerSpot.getRowIndex() == maze.getGoalPosition().getRowIndex()) {
+                endGame();
+            }
         }
     }
 
@@ -365,9 +367,10 @@ public class GamePageController {
     }
 
     public void openChoosingLoadedGame() throws IOException, ClassNotFoundException {
-        Scene scene = new Scene(new Group());
+        Scene scene = new Scene(new Pane());
         Stage stage = new Stage();
-        scene.getStylesheets().addAll(this.getClass().getResource("LoadGame.css").toExternalForm());
+        stage.setHeight(500);
+        stage.setWidth(500);
 
         TableView table = new TableView();
         Label label = new Label("Choose a game from the table and then click on Load");
@@ -452,7 +455,7 @@ public class GamePageController {
         vbox.setAlignment(Pos.CENTER);
         hbox.getChildren().addAll(LoadButton, ExitButton);
         vbox.getChildren().addAll(label, table, sp);
-        ((Group) scene.getRoot()).getChildren().addAll(vbox);
+        ((Pane) scene.getRoot()).getChildren().addAll(vbox);
         //table.prefWidthProperty().bind(stage.widthProperty());
         //table.prefHeightProperty().bind(vbox.heightProperty());
         hbox.prefHeightProperty().bind(table.heightProperty());
@@ -463,14 +466,19 @@ public class GamePageController {
         stage.setScene(scene);
         stage.setHeight(600);
         stage.setWidth(400);
+        scene.getStylesheets().addAll(this.getClass().getResource("LoadGame.css").toExternalForm());
         stage.show();
     }
 
     private int[] getDimensionsFromDialog() {
         final int[] RowsAndCols = new int[2];
+        boolean goodInfo = true;
         final boolean[] clickedCancel = new boolean[1];
         do {
+            goodInfo = true;
             Dialog<Pair<String, String>> dialog = new Dialog<>();
+            DialogPane dialogPane = dialog.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("getDimensions.css").toExternalForm());
             dialog.setTitle("Set Maze Dimension");
 
             // Set the button types.
@@ -496,23 +504,31 @@ public class GamePageController {
             StackPane secondPane = new StackPane(secondCharacter);
             secondCharacter.setFitHeight(50);
             secondCharacter.setFitWidth(50);
-            gridPane.add(secondPane, 1, 3);
+            gridPane.add(secondPane, 0, 4);
             ImageView thirdCharacter = new ImageView("/Images/Torchic/Down0.png");
             StackPane thirdPane = new StackPane(thirdCharacter);
             thirdCharacter.setFitHeight(50);
             thirdCharacter.setFitWidth(50);
-            gridPane.add(thirdPane, 0, 4);
+            gridPane.add(thirdPane, 0, 5);
             ImageView fourthCharacter = new ImageView("/Images/Treeco/Down0.png");
             StackPane fourthPane = new StackPane(fourthCharacter);
             fourthCharacter.setFitHeight(50);
             fourthCharacter.setFitWidth(50);
-            gridPane.add(fourthPane, 1, 4);
+            gridPane.add(fourthPane, 0, 6);
+            firstPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                    BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+            secondPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                    BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+            thirdPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                    BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+            fourthPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
+                    BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
             firstPane.addEventHandler(MouseEvent.MOUSE_PRESSED,
                     new EventHandler<MouseEvent>() {
 
                         public void handle(MouseEvent e) {
                             if (SelectedCharacter != 1) {
-                                firstPane.setBorder(new Border(new BorderStroke(Color.RED,
+                                firstPane.setBorder(new Border(new BorderStroke(Color.GREEN,
                                         BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
                                 secondPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
                                         BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -529,7 +545,7 @@ public class GamePageController {
 
                         public void handle(MouseEvent e) {
                             if (SelectedCharacter != 2) {
-                                secondPane.setBorder(new Border(new BorderStroke(Color.RED,
+                                secondPane.setBorder(new Border(new BorderStroke(Color.GREEN,
                                         BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
                                 firstPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
                                         BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -546,7 +562,7 @@ public class GamePageController {
 
                         public void handle(MouseEvent e) {
                             if (SelectedCharacter != 3) {
-                                thirdPane.setBorder(new Border(new BorderStroke(Color.RED,
+                                thirdPane.setBorder(new Border(new BorderStroke(Color.GREEN,
                                         BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
                                 secondPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
                                         BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -563,7 +579,7 @@ public class GamePageController {
 
                         public void handle(MouseEvent e) {
                             if (SelectedCharacter != 4) {
-                                fourthPane.setBorder(new Border(new BorderStroke(Color.RED,
+                                fourthPane.setBorder(new Border(new BorderStroke(Color.GREEN,
                                         BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
                                 secondPane.setBorder(new Border(new BorderStroke(Color.TRANSPARENT,
                                         BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -600,13 +616,17 @@ public class GamePageController {
                     RowsAndCols[1] = -1;
                 }
             });
-            if(SelectedCharacter == 0){
-                showAlert("You need to select a character","Error");
-                clickedCancel[0] = false;
+
+            if ((RowsAndCols[0] <= 0 || RowsAndCols[1] <= 0) && !clickedCancel[0]) {
+                showAlert("The dimensions you've entered can't be equal or less than 0", "Error");
+                goodInfo = false;
+            } else if (SelectedCharacter == 0 && !clickedCancel[0]) {
+                showAlert("You need to select a character", "Error");
+                goodInfo = false;
             }
         }
-        while ((RowsAndCols[0] <= 0 || RowsAndCols[1] <= 0) && !clickedCancel[0] || SelectedCharacter == 0);
-        if(clickedCancel[0]){
+        while (!goodInfo);
+        if (clickedCancel[0]) {
             SelectedCharacter = 0;
         }
         return new int[]{RowsAndCols[0], RowsAndCols[1]};

@@ -1,0 +1,37 @@
+.root{
+    -fx-background-image: url("/Images/NewGame.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 100% 100%;
+    -fx-pref-height: 300px;
+    -fx-pref-width: 500px;
+}
+TextField{
+    -fx-text-fill: Black;
+    -fx-font-size: 20px;
+    -fx-pref-width: 250px;
+    -fx-pref-height: 25px;
+}
+Label {
+    -fx-text-fill: Black;
+    /*-fx-font-family: "Bauhaus 93";*/
+    -fx-font-weight:bold;
+    -fx-font-size: 20px;
+}
+
+Button {
+    -fx-text-fill: Black;
+    -fx-font-family: "Bauhaus 93";
+    -fx-font-size: 20px;
+    -fx-background-color: Orange;
+    -fx-background-radius: 10;
+    -fx-background-size: 50%;
+}
+
+Button:hover{
+    -fx-text-fill: Black;
+    -fx-font-size: 20px;
+    -fx-font-family: "Bauhaus 93";
+    /*-fx-font-weight: bold;*/
+    -fx-background-color: LightYellow;
+}

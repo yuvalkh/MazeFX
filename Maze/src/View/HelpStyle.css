@@ -1,0 +1,23 @@
+.root{
+    -fx-background-color: rgba(241, 143, 59, 0.87);
+}
+
+Button {
+    -fx-text-fill: Black;
+    -fx-font-family: "Bauhaus 93";
+    -fx-font-size: 20px;
+    -fx-pref-height: 50;
+    -fx-pref-width: 100;
+    -fx-background-color: Yellow;
+    -fx-background-radius: 10;
+    -fx-background-size: 50%;
+}
+
+Button:hover{
+    -fx-text-fill: Black;
+    -fx-font-size: 20px;
+    -fx-font-family: "Bauhaus 93";
+    -fx-pref-height: 50;
+    -fx-pref-width: 100;
+    -fx-background-color: LightYellow;
+}

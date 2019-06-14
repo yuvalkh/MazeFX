@@ -1,0 +1,41 @@
+.root{
+    -fx-background-color: rgba(68, 77, 241, 0.87);
+
+}
+Label{
+    -fx-text-fill: Black;
+    -fx-font-size: 20px;
+    -fx-pref-width: 300px;
+    -fx-pref-height: 30px;
+}
+
+.combo-box-base {
+    -fx-pref-width: 50px;
+}
+
+TextField{
+    -fx-text-fill: Black;
+    -fx-font-size: 10px;
+    -fx-pref-width: 30px;
+    -fx-pref-height: 20px;
+}
+
+Button {
+    -fx-text-fill: Black;
+    -fx-font-family: "Bauhaus 93";
+    -fx-font-size: 20px;
+    -fx-pref-height: 50;
+    -fx-pref-width: 100;
+    -fx-background-color: Yellow;
+    -fx-background-radius: 10;
+    -fx-background-size: 50%;
+}
+
+Button:hover{
+    -fx-text-fill: Black;
+    -fx-font-size: 20px;
+    -fx-font-family: "Bauhaus 93";
+    -fx-pref-height: 50;
+    -fx-pref-width: 100;
+    -fx-background-color: LightYellow;
+}

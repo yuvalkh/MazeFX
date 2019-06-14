@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.MainController" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.StartPageController" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button fx:id="closeButton" onAction="#openMazeWindow" layoutX="291.0" layoutY="183.0" mnemonicParsing="false"  prefHeight="55.0" prefWidth="109.0" text="Start Game" />
       <Button layoutX="447.0" layoutY="183.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="109.0" text="Load Game" />

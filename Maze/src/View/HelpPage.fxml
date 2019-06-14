@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HelpPageController">
+   <children>
+      <Label alignment="TOP_CENTER" text="Story:" VBox.vgrow="ALWAYS">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_CENTER" text="You entered to a maze with Ash.&#10;After few minutes you've heard a scary voice which made you run away.&#10;After you've reassured yourself you noticed that Ash is not near you.&#10;Ash decided to stay at his place till you will reach him.&#10;Now you need to find a way to get to Ash !&#10;" VBox.vgrow="ALWAYS">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_CENTER" text="Controls:" VBox.vgrow="ALWAYS">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_CENTER" text="Pressing numpad arrows will move  your character.&#10;You can also click on a close spot to move your character.&#10;You can press on &quot;Solve Maze&quot; in order to see the solution to the maze.&#10;Pressing on &quot;Solve Maze&quot; again will make the solution disappear. " VBox.vgrow="ALWAYS">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="ExitButton" mnemonicParsing="false" onAction="#handleCancelButton" text="Exit" />
+   </children>
+   <padding>
+      <Insets left="5.0" />
+   </padding>
+</VBox>

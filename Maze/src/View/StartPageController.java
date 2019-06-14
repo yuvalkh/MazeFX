@@ -4,28 +4,29 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.*;
 
-public class MainController {
+public class StartPageController {
 
     @FXML
     public javafx.scene.control.Button StartGame;
     public javafx.scene.control.Button HelpButton;
     public javafx.scene.control.Button AboutButton;
+    public javafx.scene.control.Button OptionsButton;
     public javafx.scene.control.Button ExitButton;
 
-    public void openTestWindow() throws IOException {
+    public void openHelpWindow() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("MainTest.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("HelpPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setTitle("Tests");
+        scene.getStylesheets().addAll(this.getClass().getResource("HelpStyle.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
-        Stage oldStage = (Stage) StartGame.getScene().getWindow();
-        oldStage.close();
     }
 
     public void openMazeWindow() throws IOException {
@@ -40,12 +41,23 @@ public class MainController {
         Stage oldStage = (Stage) StartGame.getScene().getWindow();
         oldStage.close();
     }
+    public void openOptionsWindow() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("OptionsPage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 500, 300);
+        Stage stage = new Stage();
+        stage = new Stage();
+        stage.setTitle("Options");
+        stage.setScene(scene);
+        scene.getStylesheets().addAll(this.getClass().getResource("OptionsStyle.css").toExternalForm());
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
     @FXML
     private void ExitGame(){
         Stage stage = (Stage) ExitButton.getScene().getWindow();
         stage.close();
-
-
     }
 
     private void showAlert(String alertMessage, String title) {
