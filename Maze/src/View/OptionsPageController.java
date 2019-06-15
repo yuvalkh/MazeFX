@@ -18,7 +18,15 @@ public class OptionsPageController implements Initializable {
 
 
     public void handleApplyButton(){
-
+        Server.Configurations.setGenerateMazeAlgorithm(GeneratingMazeAlgorithmComboBox.getSelectionModel().getSelectedItem().toString());
+        Server.Configurations.setSearchAlgorithm(SearchingAlgorithmComboBox.getSelectionModel().getSelectedItem().toString());
+        Server.Configurations.setMaxNumberOfThreadsOnServer(NumOfThreadsTextField.getText());
+        if(MusicCheckBox.isSelected()){
+            Music.setMusicOn();
+        }
+        else{
+            Music.setMusicOff();
+        }
     }
 
     public void handleCancelButton(){
@@ -28,10 +36,20 @@ public class OptionsPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        /*SearchingAlgorithmComboBox.setValue(Server.Configurations.getSearchAlgorithm());
+        if(Music.isMusicOn()){
+            MusicCheckBox.setSelected(true);
+        }
+        else{
+            MusicCheckBox.setSelected(false);
+        }
+        SearchingAlgorithmComboBox.setValue(Server.Configurations.getSearchAlgorithm());
         GeneratingMazeAlgorithmComboBox.setValue(Server.Configurations.getGenerateMazeAlgorithm());
-        NumOfThreadsTextField.setText(Integer.toString(Server.Configurations.getMaxNumberOfThreadsOnServer()));*/
-        GeneratingMazeAlgorithmComboBox.setValue("Breadth First Search");
-        NumOfThreadsTextField.setText("5");
+        NumOfThreadsTextField.setText(Integer.toString(Server.Configurations.getMaxNumberOfThreadsOnServer()));
+        SearchingAlgorithmComboBox.getItems().add("Breadth First Search");
+        SearchingAlgorithmComboBox.getItems().add("Depth First Search");
+        SearchingAlgorithmComboBox.getItems().add("Best First Search");
+        GeneratingMazeAlgorithmComboBox.getItems().add("EmptyMazeGenerator");
+        GeneratingMazeAlgorithmComboBox.getItems().add("SimpleMazeGenerator");
+        GeneratingMazeAlgorithmComboBox.getItems().add("MyMazeGenerator");
     }
 }

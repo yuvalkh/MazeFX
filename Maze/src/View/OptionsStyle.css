@@ -9,8 +9,10 @@ Label{
     -fx-pref-height: 30px;
 }
 
-.combo-box-base {
-    -fx-pref-width: 50px;
+.combo-box-base
+{
+    -fx-pref-width: 900px;
+    -fx-max-width: 900px;
 }
 
 TextField{

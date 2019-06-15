@@ -6,15 +6,12 @@ import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.*;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -73,59 +70,16 @@ public class GamePageController {
                 isControlPressed = true;
             }
             if (ke.getCode() == KeyCode.RIGHT) {
-                if (PlayerSpot.getColumnIndex() < maze.getNumOfColumns() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex() + 1) != 1) {
-                    maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
-                    PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() + 1);
-                    maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
-                    mazeDisplayer.setDimentions(maze);
-                    mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
-                    mazeDisplayer.setCharacterImage(character.getRightImage());
-                    mazeDisplayer.redraw();
-                } else {
-                    //showAlert("You can't walk right anymore","no way");
-                }
+                movePlayer("Right");
             }
             if (ke.getCode() == KeyCode.DOWN) {
-                if (PlayerSpot.getRowIndex() < maze.getNumOfRows() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex() + 1, PlayerSpot.getColumnIndex()) != 1) {
-                    maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
-                    PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() + 1);
-                    maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
-                    mazeDisplayer.setDimentions(maze);
-                    mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
-                    mazeDisplayer.setCharacterImage(character.getDownImage());
-                    mazeDisplayer.redraw();
-                } else {
-
-                    //showAlert("You can't walk down anymore","no way");
-                }
+                movePlayer("Down");
             }
             if (ke.getCode() == KeyCode.UP) {
-                if (PlayerSpot.getRowIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex() - 1, PlayerSpot.getColumnIndex()) != 1) {
-                    maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
-                    PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() - 1);
-                    maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
-                    mazeDisplayer.setDimentions(maze);
-                    mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
-                    mazeDisplayer.setCharacterImage(character.getUpImage());
-                    mazeDisplayer.redraw();
-                } else {
-                    //showAlert("You can't walk up anymore","no way");
-
-                }
+                movePlayer("Up");
             }
             if (ke.getCode() == KeyCode.LEFT) {
-                if (PlayerSpot.getColumnIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex() - 1) != 1) {
-                    maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
-                    PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() - 1);
-                    maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
-                    mazeDisplayer.setDimentions(maze);
-                    mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
-                    mazeDisplayer.setCharacterImage(character.getLeftImage());
-                    mazeDisplayer.redraw();
-                } else {
-
-                    //showAlert("You can't walk left anymore","no way");
-                }
+                movePlayer("Left");
             }
             if (PlayerSpot.getColumnIndex() == maze.getGoalPosition().getColumnIndex() && PlayerSpot.getRowIndex() == maze.getGoalPosition().getRowIndex()) {
                 endGame();
@@ -153,19 +107,7 @@ public class GamePageController {
         String characterName = (String) oi.readObject();
         oi.close();
         fi.close();
-        List<Image> Up = new LinkedList<>();
-        List<Image> Right = new LinkedList<>();
-        List<Image> Down = new LinkedList<>();
-        List<Image> Left = new LinkedList<>();
-        Up.add(new Image("/Images/" + characterName + "/Up0.png"));
-        Up.add(new Image("/Images/" + characterName + "/Up1.png"));
-        Right.add(new Image("/Images/" + characterName + "/Right0.png"));
-        Right.add(new Image("/Images/" + characterName + "/Right1.png"));
-        Down.add(new Image("/Images/" + characterName + "/Down0.png"));
-        Down.add(new Image("/Images/" + characterName + "/Down1.png"));
-        Left.add(new Image("/Images/" + characterName + "/Left0.png"));
-        Left.add(new Image("/Images/" + characterName + "/Left1.png"));
-        character = new Character(characterName, Up, Down, Right, Left);
+        loadCharacterImage(characterName);
         maze = new Maze(bytedLoadedMaze);
         maze.setMazeInfo(loadedPosition.getRowIndex(), loadedPosition.getColumnIndex(), 5);
         PlayerSpot = loadedPosition;
@@ -190,6 +132,22 @@ public class GamePageController {
         }
     }
 
+    private void loadCharacterImage(String CharacterName){
+        List<Image> Up = new LinkedList<>();
+        List<Image> Right = new LinkedList<>();
+        List<Image> Down = new LinkedList<>();
+        List<Image> Left = new LinkedList<>();
+        Up.add(new Image("/Images/" + CharacterName + "/Up0.png"));
+        Up.add(new Image("/Images/"+ CharacterName +"/Up1.png"));
+        Right.add(new Image("/Images/"+ CharacterName +"/Right0.png"));
+        Right.add(new Image("/Images/"+ CharacterName +"/Right1.png"));
+        Down.add(new Image("/Images/"+ CharacterName +"/Down0.png"));
+        Down.add(new Image("/Images/"+ CharacterName +"/Down1.png"));
+        Left.add(new Image("/Images/"+ CharacterName +"/Left0.png"));
+        Left.add(new Image("/Images/"+ CharacterName +"/Left1.png"));
+        character = new Character(CharacterName, Up, Down, Right, Left);
+    }
+
     public void generateMaze() {
         int[] RowsAndCols;
         RowsAndCols = getDimensionsFromDialog();
@@ -202,50 +160,14 @@ public class GamePageController {
             PlayerSpot = new Position(GeneratedMaze.getStartPosition().getRowIndex(), GeneratedMaze.getStartPosition().getColumnIndex());
             maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
             mazeDisplayer.setDimentions(maze);
-            List<Image> Up = new LinkedList<>();
-            List<Image> Right = new LinkedList<>();
-            List<Image> Down = new LinkedList<>();
-            List<Image> Left = new LinkedList<>();
             if (SelectedCharacter == 1) {
-                Up.add(new Image("/Images/Pikachu/Up0.png"));
-                Up.add(new Image("/Images/Pikachu/Up1.png"));
-                Right.add(new Image("/Images/Pikachu/Right0.png"));
-                Right.add(new Image("/Images/Pikachu/Right1.png"));
-                Down.add(new Image("/Images/Pikachu/Down0.png"));
-                Down.add(new Image("/Images/Pikachu/Down1.png"));
-                Left.add(new Image("/Images/Pikachu/Left0.png"));
-                Left.add(new Image("/Images/Pikachu/Left1.png"));
-                character = new Character("Pikachu", Up, Down, Right, Left);
+                loadCharacterImage("Pikachu");
             } else if (SelectedCharacter == 2) {
-                Up.add(new Image("/Images/Squirtel/Up0.png"));
-                Up.add(new Image("/Images/Squirtel/Up1.png"));
-                Right.add(new Image("/Images/Squirtel/Right0.png"));
-                Right.add(new Image("/Images/Squirtel/Right1.png"));
-                Down.add(new Image("/Images/Squirtel/Down0.png"));
-                Down.add(new Image("/Images/Squirtel/Down1.png"));
-                Left.add(new Image("/Images/Squirtel/Left0.png"));
-                Left.add(new Image("/Images/Squirtel/Left1.png"));
-                character = new Character("Squirtel", Up, Down, Right, Left);
+                loadCharacterImage("Squirtel");
             } else if (SelectedCharacter == 3) {
-                Up.add(new Image("/Images/Torchic/Up0.png"));
-                Up.add(new Image("/Images/Torchic/Up1.png"));
-                Right.add(new Image("/Images/Torchic/Right0.png"));
-                Right.add(new Image("/Images/Torchic/Right1.png"));
-                Down.add(new Image("/Images/Torchic/Down0.png"));
-                Down.add(new Image("/Images/Torchic/Down1.png"));
-                Left.add(new Image("/Images/Torchic/Left0.png"));
-                Left.add(new Image("/Images/Torchic/Left1.png"));
-                character = new Character("Torchic", Up, Down, Right, Left);
+                loadCharacterImage("Torchic");
             } else if (SelectedCharacter == 4) {
-                Up.add(new Image("/Images/Treeco/Up0.png"));
-                Up.add(new Image("/Images/Treeco/Up1.png"));
-                Right.add(new Image("/Images/Treeco/Right0.png"));
-                Right.add(new Image("/Images/Treeco/Right1.png"));
-                Down.add(new Image("/Images/Treeco/Down0.png"));
-                Down.add(new Image("/Images/Treeco/Down1.png"));
-                Left.add(new Image("/Images/Treeco/Left0.png"));
-                Left.add(new Image("/Images/Treeco/Left1.png"));
-                character = new Character("Treeco", Up, Down, Right, Left);
+                loadCharacterImage("Treeco");
             } else {
                 showAlert("You didn't choose a character", "aww man");
             }
@@ -469,10 +391,72 @@ public class GamePageController {
         scene.getStylesheets().addAll(this.getClass().getResource("LoadGame.css").toExternalForm());
         stage.show();
     }
+    private void movePlayer(String direction){
+        if(direction.equals("Right")){
+            if (PlayerSpot.getColumnIndex() < maze.getNumOfColumns() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex() + 1) != 1) {
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
+                PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() + 1);
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
+                mazeDisplayer.setDimentions(maze);
+                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                mazeDisplayer.setCharacterImage(character.getRightImage());
+                mazeDisplayer.redraw();
+            }
+        } else if(direction.equals("Left")){
+            if (PlayerSpot.getColumnIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex() - 1) != 1) {
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
+                PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() - 1);
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
+                mazeDisplayer.setDimentions(maze);
+                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                mazeDisplayer.setCharacterImage(character.getLeftImage());
+                mazeDisplayer.redraw();
+            }
+        } else if(direction.equals("Down")){
+            if (PlayerSpot.getRowIndex() < maze.getNumOfRows() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex() + 1, PlayerSpot.getColumnIndex()) != 1) {
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
+                PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() + 1);
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
+                mazeDisplayer.setDimentions(maze);
+                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                mazeDisplayer.setCharacterImage(character.getDownImage());
+                mazeDisplayer.redraw();
+            }
+        } else if(direction.equals("Up")){
+            if (PlayerSpot.getRowIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex() - 1, PlayerSpot.getColumnIndex()) != 1) {
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
+                PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() - 1);
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
+                mazeDisplayer.setDimentions(maze);
+                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                mazeDisplayer.setCharacterImage(character.getUpImage());
+                mazeDisplayer.redraw();
+            }
+        }
+    }
+    public void moveWithMouse(MouseEvent e) {
+        if (maze != null) {
+            double ClickedX = e.getX();
+            double ClickedY = e.getY();
+            double canvasHeight = mazeDisplayer.getWidth();
+            double canvasWidth = mazeDisplayer.getHeight();
+            double cellHeight = canvasHeight / (2 * mazeDisplayer.getZoom() + 1);
+            double cellWidth = canvasWidth / (2 * mazeDisplayer.getZoom() + 1);
+            if (ClickedX > canvasWidth / 2 && e.getY() < canvasHeight / 2 + cellHeight / 2 && ClickedY > canvasHeight / 2 - cellHeight / 2) {
+                movePlayer("Right");
+            } else if (ClickedX < canvasWidth / 2 && ClickedY < canvasHeight / 2 + cellHeight / 2 && ClickedY > canvasHeight / 2 - cellHeight / 2) {
+                movePlayer("Left");
+            } else if (ClickedY < canvasHeight / 2 && ClickedX < canvasWidth / 2 + cellWidth / 2 && ClickedX > canvasWidth / 2 - cellWidth / 2) {
+                movePlayer("Up");
+            } else if (ClickedY > canvasHeight / 2 && ClickedX < canvasWidth / 2 + cellWidth / 2 && ClickedX > canvasWidth / 2 - cellWidth / 2) {
+                movePlayer("Down");
+            }
+        }
+    }
 
     private int[] getDimensionsFromDialog() {
         final int[] RowsAndCols = new int[2];
-        boolean goodInfo = true;
+        boolean goodInfo;
         final boolean[] clickedCancel = new boolean[1];
         do {
             goodInfo = true;

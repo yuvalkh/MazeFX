@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="273.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.OptionsPageController">
    <children>
       <Label alignment="CENTER" prefHeight="44.0" prefWidth="125.0" text="Options" VBox.vgrow="ALWAYS">
@@ -24,23 +23,23 @@
       <GridPane alignment="CENTER" VBox.vgrow="ALWAYS">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="10.0" prefWidth="300.0" />
-          <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" prefWidth="150.0" />
+          <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" prefWidth="200.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="47.0" text="Music" />
             <Label alignment="CENTER" prefHeight="18.0" prefWidth="138.0" text="Searching Algorithm" GridPane.rowIndex="1" />
             <CheckBox fx:id="MusicCheckBox" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="18.0" prefWidth="49.0" text="On" GridPane.columnIndex="1" />
-            <ComboBox fx:id="SearchingAlgorithmComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="SearchingAlgorithmComboBox" prefHeight="26.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label alignment="CENTER" prefHeight="18.0" prefWidth="158.0" text="Generating Maze Algorithm" GridPane.rowIndex="2" />
-            <ComboBox fx:id="GeneratingMazeAlgorithmComboBox" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="GeneratingMazeAlgorithmComboBox" prefHeight="26.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label alignment="CENTER" prefHeight="18.0" prefWidth="186.0" text="Max clients the server can talk to" GridPane.rowIndex="3" />
-            <TextField fx:id="NumOfThreadsTextField" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+            <TextField fx:id="NumOfThreadsTextField" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -49,8 +48,8 @@
       </GridPane>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" VBox.vgrow="ALWAYS">
          <children>
-            <Button fx:id="ApplyButton" onAction="#handleApplyButton" alignment="CENTER" mnemonicParsing="false" text="Apply" HBox.hgrow="ALWAYS" />
-            <Button fx:id="CancelButton" onAction="#handleCancelButton" mnemonicParsing="false" text="Exit" HBox.hgrow="ALWAYS" />
+            <Button fx:id="ApplyButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleApplyButton" text="Apply" HBox.hgrow="ALWAYS" />
+            <Button fx:id="CancelButton" mnemonicParsing="false" onAction="#handleCancelButton" text="Exit" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
    </children>

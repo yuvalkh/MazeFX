@@ -55,7 +55,7 @@ public class StartPageController {
     public void openOptionsWindow() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("OptionsPage.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 500, 300);
+        Scene scene = new Scene(fxmlLoader.load(), 750, 350);
         Stage stage = new Stage();
         stage = new Stage();
         stage.setTitle("Options");
