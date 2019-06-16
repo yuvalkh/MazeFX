@@ -95,7 +95,7 @@ public class GamePageController {
             else if(ke.getCode() == KeyCode.NUMPAD9) {
                 movePlayer("UpRight");
             }
-            else if (PlayerSpot.getColumnIndex() == maze.getGoalPosition().getColumnIndex() && PlayerSpot.getRowIndex() == maze.getGoalPosition().getRowIndex()) {
+            if (PlayerSpot.getColumnIndex() == maze.getGoalPosition().getColumnIndex() && PlayerSpot.getRowIndex() == maze.getGoalPosition().getRowIndex()) {
                 endGame();
             }
         }
@@ -515,7 +515,7 @@ public class GamePageController {
         mazeDisplayer.redraw();
     }
 
-    public void moveWithMouse(MouseEvent e) {
+    public void moveWithMouse(MouseEvent e) throws IOException {
         if (maze != null) {
             double ClickedX = e.getX();
             double ClickedY = e.getY();
@@ -531,6 +531,9 @@ public class GamePageController {
                 movePlayer("Up");
             } else if (ClickedY > canvasHeight / 2 && ClickedX < canvasWidth / 2 + cellWidth / 2 && ClickedX > canvasWidth / 2 - cellWidth / 2) {
                 movePlayer("Down");
+            }
+            if (PlayerSpot.getColumnIndex() == maze.getGoalPosition().getColumnIndex() && PlayerSpot.getRowIndex() == maze.getGoalPosition().getRowIndex()) {
+                endGame();
             }
         }
     }

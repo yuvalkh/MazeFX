@@ -57,6 +57,7 @@ public class StartPageController implements Initializable {
             Main.solveSearchProblemServer.stop();
             Main.mazeGeneratingServer.stop();
         });
+        Music.setMusicOff();
         Stage oldStage = (Stage) StartGame.getScene().getWindow();
         oldStage.close();
     }
@@ -69,7 +70,6 @@ public class StartPageController implements Initializable {
         stage.setScene(scene);
         scene.getStylesheets().addAll(this.getClass().getResource("OptionsStyle.css").toExternalForm());
         stage.initModality(Modality.APPLICATION_MODAL);
-
         stage.show();
     }
 
@@ -83,6 +83,11 @@ public class StartPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //Music.setMusic("MenuMusic");
+        Music music = new Music(getClass().getResource("/") + "/Music/MenuMusic.wav");
+        try {
+            music.start(new Stage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
