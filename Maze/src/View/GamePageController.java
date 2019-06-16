@@ -86,16 +86,16 @@ public class GamePageController {
                 movePlayer("Left");
             }
             else if(ke.getCode() == KeyCode.NUMPAD1) {
-
+                movePlayer("DownLeft");
             }
             else if(ke.getCode() == KeyCode.NUMPAD3) {
-
+                movePlayer("DownRight");
             }
             else if(ke.getCode() == KeyCode.NUMPAD7) {
-
+                movePlayer("UpLeft");
             }
             else if(ke.getCode() == KeyCode.NUMPAD9) {
-
+                movePlayer("UpRight");
             }
             else if (PlayerSpot.getColumnIndex() == maze.getGoalPosition().getColumnIndex() && PlayerSpot.getRowIndex() == maze.getGoalPosition().getRowIndex()) {
                 endGame();
@@ -476,6 +476,93 @@ public class GamePageController {
             if (PlayerSpot.getRowIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex() - 1, PlayerSpot.getColumnIndex()) != 1) {
                 maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
                 PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() - 1);
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
+                mazeDisplayer.setDimentions(maze);
+                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                mazeDisplayer.setCharacterImage(character.getUpImage());
+                mazeDisplayer.redraw();
+            }
+        } else if(direction.equals("DownLeft")){
+            if (PlayerSpot.getRowIndex() < maze.getNumOfRows() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex() + 1, PlayerSpot.getColumnIndex()) != 1    &&      PlayerSpot.getColumnIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex() + 1, PlayerSpot.getColumnIndex() - 1) != 1) {
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
+                PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() + 1);
+                PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() - 1);
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
+                mazeDisplayer.setDimentions(maze);
+                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                mazeDisplayer.setCharacterImage(character.getLeftImage());
+                mazeDisplayer.redraw();
+            }
+            else if(PlayerSpot.getColumnIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex() - 1) != 1    &&      PlayerSpot.getRowIndex() < maze.getNumOfRows() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex() + 1, PlayerSpot.getColumnIndex() - 1) != 1){
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
+                PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() + 1);
+                PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() - 1);
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
+                mazeDisplayer.setDimentions(maze);
+                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                mazeDisplayer.setCharacterImage(character.getDownImage());
+                mazeDisplayer.redraw();
+            }
+        }
+        else if(direction.equals("DownRight")){
+            if (PlayerSpot.getRowIndex() < maze.getNumOfRows() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex() + 1, PlayerSpot.getColumnIndex()) != 1    &&      PlayerSpot.getColumnIndex() < maze.getNumOfColumns() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex() + 1, PlayerSpot.getColumnIndex() + 1) != 1) {
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
+                PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() + 1);
+                PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() + 1);
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
+                mazeDisplayer.setDimentions(maze);
+                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                mazeDisplayer.setCharacterImage(character.getRightImage());
+                mazeDisplayer.redraw();
+            }
+            else if(PlayerSpot.getColumnIndex() < maze.getNumOfColumns() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex() + 1) != 1    &&      PlayerSpot.getRowIndex() < maze.getNumOfRows() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex() + 1, PlayerSpot.getColumnIndex() + 1) != 1){
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
+                PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() + 1);
+                PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() + 1);
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
+                mazeDisplayer.setDimentions(maze);
+                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                mazeDisplayer.setCharacterImage(character.getDownImage());
+                mazeDisplayer.redraw();
+            }
+        }
+        else if(direction.equals("UpRight")){
+            if (PlayerSpot.getRowIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex() - 1, PlayerSpot.getColumnIndex()) != 1    &&      PlayerSpot.getColumnIndex() < maze.getNumOfColumns() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex() - 1, PlayerSpot.getColumnIndex() + 1) != 1) {
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
+                PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() - 1);
+                PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() + 1);
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
+                mazeDisplayer.setDimentions(maze);
+                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                mazeDisplayer.setCharacterImage(character.getRightImage());
+                mazeDisplayer.redraw();
+            }
+            else if(PlayerSpot.getColumnIndex() < maze.getNumOfColumns() - 1 && maze.getMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex() + 1) != 1    &&      PlayerSpot.getRowIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex() - 1, PlayerSpot.getColumnIndex() + 1) != 1){
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
+                PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() - 1);
+                PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() + 1);
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
+                mazeDisplayer.setDimentions(maze);
+                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                mazeDisplayer.setCharacterImage(character.getUpImage());
+                mazeDisplayer.redraw();
+            }
+        }
+        else if(direction.equals("UpLeft")){
+            if (PlayerSpot.getRowIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex() - 1, PlayerSpot.getColumnIndex()) != 1    &&      PlayerSpot.getColumnIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex() - 1, PlayerSpot.getColumnIndex() - 1) != 1) {
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
+                PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() - 1);
+                PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() - 1);
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
+                mazeDisplayer.setDimentions(maze);
+                mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
+                mazeDisplayer.setCharacterImage(character.getLeftImage());
+                mazeDisplayer.redraw();
+            }
+            else if(PlayerSpot.getColumnIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex() - 1) != 1    &&      PlayerSpot.getRowIndex() > 0 && maze.getMazeInfo(PlayerSpot.getRowIndex() - 1, PlayerSpot.getColumnIndex() - 1) != 1){
+                maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 0);
+                PlayerSpot.setRowIndex(PlayerSpot.getRowIndex() - 1);
+                PlayerSpot.setColumnIndex(PlayerSpot.getColumnIndex() - 1);
                 maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
                 mazeDisplayer.setDimentions(maze);
                 mazeDisplayer.updatePlayerSpot(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex());
