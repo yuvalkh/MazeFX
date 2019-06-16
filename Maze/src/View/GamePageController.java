@@ -410,12 +410,12 @@ public class GamePageController {
         }
 
         VBox vbox = new VBox(10);
-        vbox.setPadding(new Insets(10, 0, 0, 10));
+        vbox.setPadding(new Insets(10, 10, 10, 10));
         HBox hbox = new HBox(10);
-        hbox.setPadding(new Insets(10, 0, 0, 10));
+        hbox.setPadding(new Insets(10, 10, 10, 10));
         StackPane sp = new StackPane(hbox);
         sp.prefWidth(200);
-        sp.prefHeight(200);
+        sp.prefHeight(100);
 
         HBox.setHgrow(table, Priority.ALWAYS);
         HBox.setHgrow(ExitButton, Priority.ALWAYS);
@@ -431,7 +431,7 @@ public class GamePageController {
         ((Pane) scene.getRoot()).getChildren().addAll(vbox);
         //table.prefWidthProperty().bind(stage.widthProperty());
         //table.prefHeightProperty().bind(vbox.heightProperty());
-        hbox.prefHeightProperty().bind(table.heightProperty());
+        //hbox.prefHeightProperty().bind(table.heightProperty());
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         vbox.prefHeightProperty().bind(scene.heightProperty());
         vbox.prefWidthProperty().bind(scene.widthProperty());
