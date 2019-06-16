@@ -45,6 +45,7 @@ public class StartPageController implements Initializable {
     }
 
     public void openMazeWindow() throws IOException {
+        Music.stopMusic();
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("GamePage.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1200, 900);
@@ -57,7 +58,6 @@ public class StartPageController implements Initializable {
             Main.solveSearchProblemServer.stop();
             Main.mazeGeneratingServer.stop();
         });
-        Music.setMusicOff();
         Stage oldStage = (Stage) StartGame.getScene().getWindow();
         oldStage.close();
     }
@@ -83,11 +83,13 @@ public class StartPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Music music = new Music(getClass().getResource("/") + "/Music/MenuMusic.wav");
+        Music music = new Music(getClass().getResource("/") + "/Music/MenuMusic.mp3");
         try {
             music.start(new Stage());
         } catch (Exception e) {
             e.printStackTrace();
         }
+        /*Music music = new Music("GameMusic");
+        music.PlayMusic();*/
     }
 }

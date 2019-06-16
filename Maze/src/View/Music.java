@@ -14,33 +14,35 @@ public class Music extends Application {
 
     public Music(String Path) {//private constructor to make this class static
         MusicPath = Path;
-
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        currentMusic = new Media( MusicPath);
+        currentMusic = new Media(MusicPath);
         musicPlayer = new MediaPlayer(currentMusic);
-        musicPlayer.play();
+        musicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        if(isMusicOn) {
+            musicPlayer.play();
+        }
+
     }
 
     public static boolean isMusicOn(){
         return isMusicOn;
     }
 
-    /*public static void setMusic(String nameOfMusic) {
-        currentMusic = new Media( "file://" + nameOfMusic + ".wav");
-        musicPlayer = new MediaPlayer(currentMusic);
-        musicPlayer.play();
-    }*/
-    public static void SetPath (String Path) {
-        MusicPath = Path;
+    public static void stopMusic() {
+        musicPlayer.stop();
     }
+
     public static void setMusicOff() {
+        isMusicOn = false;
         musicPlayer.stop();
     }
 
     public static void setMusicOn() {
+        isMusicOn = true;
         musicPlayer.play();
     }
+
 }

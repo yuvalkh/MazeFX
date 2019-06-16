@@ -16,18 +16,17 @@ public class OptionsPageController implements Initializable {
     public javafx.scene.control.CheckBox MusicCheckBox;
     public javafx.scene.control.ComboBox SearchingAlgorithmComboBox;
     public javafx.scene.control.ComboBox GeneratingMazeAlgorithmComboBox;
+    public boolean hadMusicBefore;
 
-
-    public void handleApplyButton(){
+    public void handleApplyButton() {
         Server.Configurations.setGenerateMazeAlgorithm(GeneratingMazeAlgorithmComboBox.getSelectionModel().getSelectedItem().toString());
         Server.Configurations.setSearchAlgorithm(SearchingAlgorithmComboBox.getSelectionModel().getSelectedItem().toString());
         Server.Configurations.setMaxNumberOfThreadsOnServer(NumOfThreadsTextField.getText());
-        /*if(MusicCheckBox.isSelected()){
+        if (MusicCheckBox.isSelected()) {
             Music.setMusicOn();
-        }
-        else{
+        } else {
             Music.setMusicOff();
-        }*/
+        }
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText("Options applied !");
         alert.setTitle("Options");
@@ -36,18 +35,19 @@ public class OptionsPageController implements Initializable {
         oldStage.close();
     }
 
-    public void handleCancelButton(){
+    public void handleCancelButton() {
         Stage oldStage = (Stage) ApplyButton.getScene().getWindow();
         oldStage.close();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if(Music.isMusicOn()){
+        if (Music.isMusicOn()) {
             MusicCheckBox.setSelected(true);
-        }
-        else{
+            hadMusicBefore = true;
+        } else {
             MusicCheckBox.setSelected(false);
+            hadMusicBefore = false;
         }
         SearchingAlgorithmComboBox.setValue(Server.Configurations.getSearchAlgorithm());
         GeneratingMazeAlgorithmComboBox.setValue(Server.Configurations.getGenerateMazeAlgorithm());
