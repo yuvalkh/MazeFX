@@ -1,5 +1,6 @@
 package View;
 
+import Server.Server;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,7 +27,7 @@ public class StartPageController implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("HelpPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
-        stage.setTitle("Tests");
+        stage.setTitle("Help Window");
         scene.getStylesheets().addAll(this.getClass().getResource("HelpStyle.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
@@ -37,7 +38,7 @@ public class StartPageController implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("AboutPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
-        stage.setTitle("Tests");
+        stage.setTitle("About Window");
         scene.getStylesheets().addAll(this.getClass().getResource("AboutStyle.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
@@ -48,10 +49,14 @@ public class StartPageController implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("GamePage.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1200, 900);
         Stage stage = new Stage();
-        stage = new Stage();
-        stage.setTitle("TheMaze");
+        stage.setTitle("Maze Game");
         stage.setScene(scene);
         stage.show();
+        stage.setOnCloseRequest( event ->
+        {
+            Main.solveSearchProblemServer.stop();
+            Main.mazeGeneratingServer.stop();
+        });
         Stage oldStage = (Stage) StartGame.getScene().getWindow();
         oldStage.close();
     }
@@ -60,11 +65,11 @@ public class StartPageController implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("OptionsPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 750, 350);
         Stage stage = new Stage();
-        stage = new Stage();
-        stage.setTitle("Options");
+        stage.setTitle("Options Window");
         stage.setScene(scene);
         scene.getStylesheets().addAll(this.getClass().getResource("OptionsStyle.css").toExternalForm());
         stage.initModality(Modality.APPLICATION_MODAL);
+
         stage.show();
     }
 
@@ -72,18 +77,8 @@ public class StartPageController implements Initializable {
     private void ExitGame(){
         Stage stage = (Stage) ExitButton.getScene().getWindow();
         stage.close();
-    }
-
-    private void showAlert(String alertMessage, String title) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(alertMessage);
-        alert.setTitle(title);
-        alert.show();
-    }
-
-    public void openAbout() {
-        showAlert("this is about window\n" +
-                "here you can see everything about us", "About");
+        Main.mazeGeneratingServer.stop();
+        Main.solveSearchProblemServer.stop();
     }
 
     @Override

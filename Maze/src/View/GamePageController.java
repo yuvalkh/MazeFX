@@ -1,5 +1,7 @@
 package View;
 
+import Client.*;
+import IO.MyDecompressorInputStream;
 import algorithms.mazeGenerators.IMazeGenerator;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
@@ -27,7 +29,9 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.URISyntaxException;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -69,19 +73,31 @@ public class GamePageController {
             if (ke.getCode() == KeyCode.CONTROL) {
                 isControlPressed = true;
             }
-            if (ke.getCode() == KeyCode.RIGHT) {
+            else if (ke.getCode() == KeyCode.RIGHT || ke.getCode() == KeyCode.NUMPAD6) {
                 movePlayer("Right");
             }
-            if (ke.getCode() == KeyCode.DOWN) {
+            else if (ke.getCode() == KeyCode.DOWN || ke.getCode() == KeyCode.NUMPAD2) {
                 movePlayer("Down");
             }
-            if (ke.getCode() == KeyCode.UP) {
+            else if (ke.getCode() == KeyCode.UP || ke.getCode() == KeyCode.NUMPAD8) {
                 movePlayer("Up");
             }
-            if (ke.getCode() == KeyCode.LEFT) {
+            else if (ke.getCode() == KeyCode.LEFT || ke.getCode() == KeyCode.NUMPAD4) {
                 movePlayer("Left");
             }
-            if (PlayerSpot.getColumnIndex() == maze.getGoalPosition().getColumnIndex() && PlayerSpot.getRowIndex() == maze.getGoalPosition().getRowIndex()) {
+            else if(ke.getCode() == KeyCode.NUMPAD1) {
+
+            }
+            else if(ke.getCode() == KeyCode.NUMPAD3) {
+
+            }
+            else if(ke.getCode() == KeyCode.NUMPAD7) {
+
+            }
+            else if(ke.getCode() == KeyCode.NUMPAD9) {
+
+            }
+            else if (PlayerSpot.getColumnIndex() == maze.getGoalPosition().getColumnIndex() && PlayerSpot.getRowIndex() == maze.getGoalPosition().getRowIndex()) {
                 endGame();
             }
         }
@@ -148,16 +164,35 @@ public class GamePageController {
         character = new Character(CharacterName, Up, Down, Right, Left);
     }
 
-    public void generateMaze() {
+    public void generateMaze() throws UnknownHostException {
         int[] RowsAndCols;
         RowsAndCols = getDimensionsFromDialog();
 
         if (RowsAndCols[0] > 0 && RowsAndCols[1] > 0 && SelectedCharacter > 0) {
-            IMazeGenerator mazeGenerator = new MyMazeGenerator();
-            Maze GeneratedMaze = mazeGenerator.generate(RowsAndCols[0], RowsAndCols[1]);
-            maze = GeneratedMaze;
-            solveMaze = new SearchableMaze(GeneratedMaze);
-            PlayerSpot = new Position(GeneratedMaze.getStartPosition().getRowIndex(), GeneratedMaze.getStartPosition().getColumnIndex());
+            Client client = new Client(InetAddress.getLocalHost(), 5400, new IClientStrategy() {
+                @Override
+                public void clientStrategy(InputStream inFromServer, OutputStream outToServer) {
+                    try {
+                        ObjectOutputStream toServer = new ObjectOutputStream(outToServer);
+                        ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
+                        toServer.flush();
+                        int[] mazeDimensions = new int[]{RowsAndCols[0], RowsAndCols[1]};
+                        toServer.writeObject(mazeDimensions); //send maze dimensions to server
+                        toServer.flush();
+                        byte[] compressedMaze = (byte[]) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
+                        InputStream is = new MyDecompressorInputStream(new ByteArrayInputStream(compressedMaze));
+                        byte[] decompressedMaze = new byte[RowsAndCols[0] * RowsAndCols[1] + 12 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze -
+                        is.read(decompressedMaze); //Fill decompressedMaze with bytes
+                        Maze GeneratedMaze = new Maze(decompressedMaze);
+                        maze = GeneratedMaze;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            client.communicateWithServer();
+            solveMaze = new SearchableMaze(maze);
+            PlayerSpot = new Position(maze.getStartPosition().getRowIndex(), maze.getStartPosition().getColumnIndex());
             maze.setMazeInfo(PlayerSpot.getRowIndex(), PlayerSpot.getColumnIndex(), 5);
             mazeDisplayer.setDimentions(maze);
             if (SelectedCharacter == 1) {
@@ -177,19 +212,34 @@ public class GamePageController {
         }
     }
 
-    public void solveMaze(ActionEvent actionEvent) {
+    public void solveMaze(ActionEvent actionEvent) throws UnknownHostException {
         if (solveMaze != null) {
             if (!showSolution) {
-                BestFirstSearch bfs = new BestFirstSearch();
-                solveMaze.setStartPosition(PlayerSpot);
-                solutionMaze = bfs.solve(solveMaze);
-                ArrayList<AState> solutionPath = solutionMaze.getSolutionPath();
-                int i;
-                for (i = 0; i < solutionPath.size(); ++i) {
-                    if (maze.getMazeInfo(((MazeState) solutionPath.get(i)).getCurrentPosition().getRowIndex(), ((MazeState) solutionPath.get(i)).getCurrentPosition().getColumnIndex()) == 0) {
-                        maze.setMazeInfo(((MazeState) solutionPath.get(i)).getCurrentPosition().getRowIndex(), ((MazeState) solutionPath.get(i)).getCurrentPosition().getColumnIndex(), 2);
+                Client client = new Client(InetAddress.getLocalHost(), 5401, new IClientStrategy() {
+                    @Override
+                    public void clientStrategy(InputStream inFromServer, OutputStream outToServer) {
+                        try {
+                            ObjectOutputStream toServer = new ObjectOutputStream(outToServer);
+                            ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
+                            toServer.flush();
+                            Maze tempMaze = new Maze(maze);
+                            tempMaze.setMazeInfo(PlayerSpot.getRowIndex(),PlayerSpot.getColumnIndex(),0);
+                            tempMaze.setStartPosition(PlayerSpot);
+                            toServer.writeObject(tempMaze); //send maze to server
+                            toServer.flush();
+                            solutionMaze = (Solution) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
+                            ArrayList<AState> solutionPath = solutionMaze.getSolutionPath();
+                            for (int i = 0; i < solutionPath.size(); ++i) {
+                                if (maze.getMazeInfo(((MazeState) solutionPath.get(i)).getCurrentPosition().getRowIndex(), ((MazeState) solutionPath.get(i)).getCurrentPosition().getColumnIndex()) == 0) {
+                                    maze.setMazeInfo(((MazeState) solutionPath.get(i)).getCurrentPosition().getRowIndex(), ((MazeState) solutionPath.get(i)).getCurrentPosition().getColumnIndex(), 2);
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
+                });
+                client.communicateWithServer();
                 showSolution = true;
             } else {
                 for (int j = 0; j < maze.getNumOfRows(); j++) {

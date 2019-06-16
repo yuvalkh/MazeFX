@@ -2,6 +2,7 @@ package View;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -27,6 +28,12 @@ public class OptionsPageController implements Initializable {
         else{
             Music.setMusicOff();
         }*/
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Options applied !");
+        alert.setTitle("Options");
+        alert.showAndWait();
+        Stage oldStage = (Stage) ApplyButton.getScene().getWindow();
+        oldStage.close();
     }
 
     public void handleCancelButton(){
@@ -36,7 +43,6 @@ public class OptionsPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Server.Configurations.loadFilePath(getClass().getResource("/config.properties").getPath());
         if(Music.isMusicOn()){
             MusicCheckBox.setSelected(true);
         }
