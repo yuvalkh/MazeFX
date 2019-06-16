@@ -297,13 +297,6 @@ public class GamePageController implements Initializable {
 
                     Optional<ButtonType> result2 = alert.showAndWait();
                     if (result2.get() == ButtonType.OK) {
-                        File fTemp = new File(getClass().getResource("/").getPath() + "SavedGames" + "/" + saveName[0]);
-                        fTemp.delete();
-                        try {
-                            fTemp.createNewFile();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
                         FileOutputStream f = new FileOutputStream(new File(getClass().getResource("/").getPath() + "SavedGames" + "/" + saveName[0]));
                         ObjectOutputStream o = new ObjectOutputStream(f);
                         String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
@@ -315,7 +308,6 @@ public class GamePageController implements Initializable {
                         o.writeObject(savingMaze.toByteArray());
                         o.writeObject(PlayerSpot);
                         o.write(mazeDisplayer.getZoom());
-                        o.writeObject(saveName[0]);
                         o.writeObject(character.getName());
                         o.close();
                         f.close();
