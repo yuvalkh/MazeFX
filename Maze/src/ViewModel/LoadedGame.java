@@ -1,4 +1,4 @@
-package View;
+package ViewModel;
 
 public class LoadedGame {
     private String GameName;

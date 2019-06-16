@@ -1,4 +1,4 @@
-package View;
+package Model;
 
 import javafx.scene.image.Image;
 
@@ -14,7 +14,6 @@ public class Wall {
     }
 
     public Image GetWall() {
-        /************* NOT FINISHED ***********/
         return myWallImage;
     }
 }

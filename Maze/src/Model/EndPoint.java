@@ -1,4 +1,4 @@
-package View;
+package Model;
 
 import javafx.scene.image.Image;
 
@@ -15,7 +15,6 @@ public class EndPoint {
     }
 
     public Image GetPoint() {
-        /********************** NOT FINISHED **************************/
         return this.image;
     }
 

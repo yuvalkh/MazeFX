@@ -1,11 +1,10 @@
 package View;
 
-import Server.Server;
+import Model.Music;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 

@@ -2,6 +2,9 @@ package View;
 
 import Client.*;
 import IO.MyDecompressorInputStream;
+import Model.*;
+import Model.Character;
+import ViewModel.LoadedGame;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.*;
@@ -47,7 +50,7 @@ public class GamePageController implements Initializable {
     Position PlayerSpot;
     //int[][] maze;
     Maze maze;
-    Character character;
+    Model.Character character;
     EndPoint endPoint = new EndPoint(new Image("/Images/EndPoint.png"));
     Solve solve = new Solve(new Image("/Images/Pokeball.png"));
     Wall wall = new Wall(new Image("/Images/tree.png"));
@@ -265,38 +268,18 @@ public class GamePageController implements Initializable {
             result.ifPresent(name -> {
                 saveName[0] = name;
             });
-            for (int i = 0; i < maze.getNumOfRows(); i++) {
-                for (int j = 0; j < maze.getNumOfColumns(); j++) {
-                    if (savingMaze.getMazeInfo(i, j) != 1) {
-                        savingMaze.setMazeInfo(i, j, 0);
+            if (result.isPresent()) {
+                // ok was pressed.
+
+                for (int i = 0; i < maze.getNumOfRows(); i++) {
+                    for (int j = 0; j < maze.getNumOfColumns(); j++) {
+                        if (savingMaze.getMazeInfo(i, j) != 1) {
+                            savingMaze.setMazeInfo(i, j, 0);
+                        }
                     }
                 }
-            }
-            if (saveName[0].matches("[a-zA-Z0-9]*")) {
-                if (!SaveFileExist(saveName[0])) {
-                    FileOutputStream f = new FileOutputStream(new File(getClass().getResource("/").getPath() + "SavedGames" + "/" + saveName[0]));
-                    ObjectOutputStream o = new ObjectOutputStream(f);
-                    String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
-                    //write the maze,player's spot, Current zoom
-                    o.writeObject(timeStamp);
-                    o.write(maze.getNumOfRows());
-                    o.write(maze.getNumOfColumns());
-                    //o.writeObject(maze.toByteArray());
-                    o.writeObject(savingMaze.toByteArray());
-                    o.writeObject(PlayerSpot);
-                    o.write(mazeDisplayer.getZoom());
-                    o.writeObject(character.getName());
-                    o.close();
-                    f.close();
-                    showAlert("Game has been saved successfully !", "SaveGame");
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Confirmation Dialog");
-                    alert.setHeaderText("It seems like there is already a save file called like this");
-                    alert.setContentText("Do you wish to overwrite it?");
-
-                    Optional<ButtonType> result2 = alert.showAndWait();
-                    if (result2.get() == ButtonType.OK) {
+                if (saveName[0].matches("[a-zA-Z0-9]*")) {
+                    if (!SaveFileExist(saveName[0])) {
                         FileOutputStream f = new FileOutputStream(new File(getClass().getResource("/").getPath() + "SavedGames" + "/" + saveName[0]));
                         ObjectOutputStream o = new ObjectOutputStream(f);
                         String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
@@ -313,7 +296,31 @@ public class GamePageController implements Initializable {
                         f.close();
                         showAlert("Game has been saved successfully !", "SaveGame");
                     } else {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Confirmation Dialog");
+                        alert.setHeaderText("It seems like there is already a save file called like this");
+                        alert.setContentText("Do you wish to overwrite it?");
 
+                        Optional<ButtonType> result2 = alert.showAndWait();
+                        if (result2.get() == ButtonType.OK) {
+                            FileOutputStream f = new FileOutputStream(new File(getClass().getResource("/").getPath() + "SavedGames" + "/" + saveName[0]));
+                            ObjectOutputStream o = new ObjectOutputStream(f);
+                            String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
+                            //write the maze,player's spot, Current zoom
+                            o.writeObject(timeStamp);
+                            o.write(maze.getNumOfRows());
+                            o.write(maze.getNumOfColumns());
+                            //o.writeObject(maze.toByteArray());
+                            o.writeObject(savingMaze.toByteArray());
+                            o.writeObject(PlayerSpot);
+                            o.write(mazeDisplayer.getZoom());
+                            o.writeObject(character.getName());
+                            o.close();
+                            f.close();
+                            showAlert("Game has been saved successfully !", "SaveGame");
+                        } else {
+
+                        }
                     }
                 }
             }
