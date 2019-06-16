@@ -18,7 +18,7 @@ public class Music {
     }
 
     public static void setMusic(String nameOfMusic) {
-        currentMusic = new Media("resource/" + nameOfMusic + ".mp3");
+        currentMusic = new Media( "file://" + nameOfMusic + ".wav");
         musicPlayer = new MediaPlayer(currentMusic);
         musicPlayer.play();
     }

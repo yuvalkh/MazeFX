@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.Reflection?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<?import View.MazeDisplayer?>
+<VBox alignment="CENTER" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" onScroll="#zoom" prefHeight="2000" prefWidth="2000" stylesheets="@GameStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GamePageController">
+   <children>
+      <!--<Canvas height="672.0" width="1137.0" VBox.vgrow="ALWAYS" />!-->
+      <MazeDisplayer onMouseClicked="#moveWithMouse" fx:id="mazeDisplayer" height="800" width="800" VBox.vgrow="ALWAYS"></MazeDisplayer>
+      <HBox alignment="BOTTOM_CENTER" prefHeight="446.0" prefWidth="756.0" spacing="30.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Button fx:id="GenerateButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#generateMaze" opacity="0.93" prefHeight="35.0" style="-fx-background-radius: 12;" text="Generate Maze" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="Bauhaus 93" size="16.0" />
+               </font>
+               <effect>
+                  <Reflection />
+               </effect>
+               <HBox.margin>
+                  <Insets bottom="50.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="SolveButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#solveMaze" opacity="0.93" prefHeight="35.0" style="-fx-background-radius: 12;" text="Solve Maze" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="Bauhaus 93" size="16.0" />
+               </font>
+               <effect>
+                  <Reflection />
+               </effect>
+               <HBox.margin>
+                  <Insets bottom="50.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="SaveButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveGame" opacity="0.93" prefHeight="35.0" style="-fx-background-radius: 12;" text="Save Game" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="Bauhaus 93" size="16.0" />
+               </font>
+               <effect>
+                  <Reflection />
+               </effect>
+               <HBox.margin>
+                  <Insets bottom="50.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="LoadButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openChoosingLoadedGame" opacity="0.93" prefHeight="35.0" style="-fx-background-radius: 12;" text="Load Game" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="Bauhaus 93" size="16.0" />
+               </font>
+               <effect>
+                  <Reflection />
+               </effect>
+               <HBox.margin>
+                  <Insets bottom="50.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="BackButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#backToMenu" opacity="0.93" prefHeight="35.0" style="-fx-background-radius: 12;" text="Back To Menu" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="Bauhaus 93" size="16.0" />
+               </font>
+               <effect>
+                  <Reflection />
+               </effect>
+               <HBox.margin>
+                  <Insets bottom="50.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </HBox>
+   </children>
+</VBox>

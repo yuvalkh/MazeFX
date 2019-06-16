@@ -21,12 +21,12 @@ public class OptionsPageController implements Initializable {
         Server.Configurations.setGenerateMazeAlgorithm(GeneratingMazeAlgorithmComboBox.getSelectionModel().getSelectedItem().toString());
         Server.Configurations.setSearchAlgorithm(SearchingAlgorithmComboBox.getSelectionModel().getSelectedItem().toString());
         Server.Configurations.setMaxNumberOfThreadsOnServer(NumOfThreadsTextField.getText());
-        if(MusicCheckBox.isSelected()){
+        /*if(MusicCheckBox.isSelected()){
             Music.setMusicOn();
         }
         else{
             Music.setMusicOff();
-        }
+        }*/
     }
 
     public void handleCancelButton(){
@@ -36,6 +36,7 @@ public class OptionsPageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Server.Configurations.loadFilePath(getClass().getResource("/config.properties").getPath());
         if(Music.isMusicOn()){
             MusicCheckBox.setSelected(true);
         }

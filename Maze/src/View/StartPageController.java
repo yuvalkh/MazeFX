@@ -2,14 +2,17 @@ package View;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class StartPageController {
+public class StartPageController implements Initializable {
 
     @FXML
     public javafx.scene.control.Button StartGame;
@@ -81,5 +84,10 @@ public class StartPageController {
     public void openAbout() {
         showAlert("this is about window\n" +
                 "here you can see everything about us", "About");
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        //Music.setMusic("MenuMusic");
     }
 }
